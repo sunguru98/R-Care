@@ -1,7 +1,14 @@
-import express, { Express, Request, Response } from 'express'
+import express, { Express } from 'express'
+import { config } from 'dotenv'
+config()
+import './db'
 
 const app: Express = express()
+const PORT: number = parseInt(process.env.PORT!) ?? 5000
 
-app.get('/', (req: Request, res: Response) => {
-  req.params
+// Routes
+app.use('/users', require('./routes/userRoutes'))
+
+app.listen(PORT, () => {
+  console.log(`Server started on PORT ${PORT}`)
 })
