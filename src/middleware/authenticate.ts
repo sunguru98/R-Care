@@ -20,7 +20,6 @@ const authenticate = async (
       _id,
       accessToken: accessToken.replace('Bearer ', '')
     });
-
     if (!user) throw new Error('Invalid Credentials');
     req.user = user;
     req.accessToken = accessToken;

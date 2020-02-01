@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { TRouteMethod, TRouteStatic } from '../types/route.types';
+import { TRouteMethod, TRouteStatic, TRoute } from '../types/route.types';
 import { TStopMethod } from '../types/stop.types';
 
 const stopSchema = new Schema<TStopMethod>({
@@ -17,13 +17,18 @@ const stopSchema = new Schema<TStopMethod>({
 });
 
 const routeSchema = new Schema<TRouteMethod>({
+  user: { type: Schema.Types.ObjectId, ref: 'user', required: true },
   name: { type: String, required: true },
   direction: {
     type: String,
     enum: ['up', 'down'],
     required: true
   },
-  status: { type: Boolean, required: true },
+  status: {
+    type: String,
+    enum: ['active', 'inactive'],
+    required: true
+  },
   routeType: {
     type: String,
     enum: ['ac', 'general'],
@@ -34,6 +39,12 @@ const routeSchema = new Schema<TRouteMethod>({
     required: true
   }
 });
+
+routeSchema.methods.toJSON = function() {
+  const route: TRoute = this.toObject();
+  delete route.__v;
+  return route;
+};
 
 const Route = model<TRouteMethod, TRouteStatic>('route', routeSchema);
 export default Route;

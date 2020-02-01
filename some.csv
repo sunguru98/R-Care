@@ -1,0 +1,7 @@
+S.No,Name,Direction,Status,Stops,Route-Type
+1,A,hello,active,"google - (1, 2) & fsfsf - (1, 3)",ac
+2,B,hello,inactive,"google - (1, 2) & fsfsf - (1, 3)",ac
+3,C,hello,active,"google - (1, 2) & fsfsf - (1, 3)",general
+4,D,hello,inactive,"google - (1, 2) &fsfsf - (1, 3)",ac
+5,E,hello,active,"google - (1, 2) & fsfsf - (1, 3)",general
+6,F,hello,inactive,"google - (1, 2) & fsfsf - (1, 3)",ac

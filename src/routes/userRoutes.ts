@@ -1,3 +1,4 @@
+/// <reference path='../../express.d.ts' />
 import { Router, Response } from 'express';
 import {
   UserRegisterRequest,
@@ -55,7 +56,7 @@ router.post<{}, UserResponse | ErrorMessage, UserRegisterRequest>(
 );
 
 // @route - POST /user/login
-// @desc - Registers a user
+// @desc - Login a user
 // @access - Public
 router.post<{}, UserResponse | ErrorMessage, UserLoginRequest>(
   '/login',

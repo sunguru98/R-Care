@@ -1,4 +1,4 @@
-import { TUser } from './src/types';
+import { TUser } from './src/types/user.types';
 
 declare global {
   module Express {

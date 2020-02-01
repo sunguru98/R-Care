@@ -4,15 +4,18 @@ import { config } from 'dotenv';
 config();
 
 import './db';
+// All Routes
 import userRoutes from './routes/userRoutes';
+import routeRoutes from './routes/routeRoutes';
 
 const app: Express = express();
 const PORT: number = parseInt(process.env.PORT!) ?? 5000;
 
-app.use(express.json())
+app.use(express.json());
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 // Routes
 app.use('/user', userRoutes);
+app.use('/routes', routeRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server started on PORT ${PORT}`);

@@ -3,6 +3,7 @@ import { compare, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { TUser, TUserMethod, TUserStatic } from '../types/user.types';
 import { JWT_PAYLOAD } from '../types/common.types';
+import Route from './Route';
 
 const userSchema = new Schema<TUserMethod>({
   name: { type: String, required: true },
@@ -39,7 +40,6 @@ userSchema.statics.findByEmailAndPassword = async (
     const user = await User.findOne({ email });
     if (!user) throw new Error('Invalid credentials');
     const isMatched = await compare(password, user.password);
-    console.log(isMatched);
     if (!isMatched) throw new Error('Invalid credentials');
     return user;
   } catch (err) {
@@ -55,6 +55,11 @@ userSchema.pre<TUser>('save', async function(
     this.password = hashedPassword;
   }
   next();
+});
+
+userSchema.pre<TUser>('remove', async function(next: HookNextFunction) {
+  await Route.deleteMany({ user: this.id });
+  next()
 });
 
 const User = model<TUserMethod, TUserStatic>('user', userSchema);
