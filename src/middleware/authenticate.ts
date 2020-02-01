@@ -1,9 +1,11 @@
+/// <reference path='../../express.d.ts' />
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import { JWT_PAYLOAD } from '../types';
+import User from '../models/User';
 
 const authenticate = async (
-  req: Request<{}>,
+  req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -15,9 +17,17 @@ const authenticate = async (
       accessToken.replace('Bearer ', ''),
       process.env.JWT_SECRET_KEY!
     ) as JWT_PAYLOAD;
-    
+    const user = await User.findOne({
+      _id,
+      accessToken: accessToken.replace('Bearer ', '')
+    });
+
+    if (!user) throw new Error('Invalid Credentials');
+    req.user = user;
+    req.accessToken = accessToken;
+    next();
   } catch (err) {
-    res.send();
+    res.status(401).send({ statusCode: 401, message: err.message });
   }
 };
 

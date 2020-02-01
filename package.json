@@ -18,12 +18,15 @@
   },
   "homepage": "https://github.com/sunguru98/Chalo.com-assignment#readme",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/mongoose": "^5.7.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.3.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.8.10"
+    "mongoose": "^5.8.10",
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",

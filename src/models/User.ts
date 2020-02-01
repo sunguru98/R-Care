@@ -1,0 +1,60 @@
+import { model, Schema, HookNextFunction } from 'mongoose';
+import { TUser, JWT_PAYLOAD, TUserMethod, TUserStatic } from '../types';
+import { compare, hash } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+
+const userSchema = new Schema<TUserMethod>({
+  name: { type: String, required: true },
+  password: { type: String, required: true },
+  accessToken: String,
+  email: { type: String, required: true },
+  routes: { type: [Schema.Types.ObjectId], ref: 'route', default: [] }
+});
+
+userSchema.methods.toJSON = function(): TUser {
+  const user = <TUser>this.toObject();
+  delete user.__v;
+  delete user.password;
+  delete user.accessToken;
+  return user;
+};
+
+userSchema.methods.getAccessToken = async function(): Promise<string> {
+  const user = this;
+  const payload = <JWT_PAYLOAD>{ email: user.email, _id: user.id };
+  const token = sign(payload, process.env.JWT_SECRET_KEY!, {
+    expiresIn: '24h'
+  });
+  user.accessToken = token;
+  await user.save();
+  return user.accessToken;
+};
+
+userSchema.statics.findByEmailAndPassword = async (
+  email: string,
+  password: string
+): Promise<TUser | null> => {
+  try {
+    const user = await User.findOne({ email });
+    if (!user) throw new Error('Invalid credentials');
+    const isMatched = await compare(password, user.password);
+    console.log(isMatched)
+    if (!isMatched) throw new Error('Invalid credentials');
+    return user;
+  } catch (err) {
+    return null;
+  }
+};
+
+userSchema.pre<TUser>('save', async function(
+  next: HookNextFunction
+): Promise<void> {
+  if (this.isModified('password')) {
+    const hashedPassword = await hash(this.password, 10);
+    this.password = hashedPassword;
+  }
+  next();
+});
+
+const User = model<TUserMethod, TUserStatic>('user', userSchema);
+export default User;
