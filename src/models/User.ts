@@ -1,7 +1,8 @@
 import { model, Schema, HookNextFunction } from 'mongoose';
-import { TUser, JWT_PAYLOAD, TUserMethod, TUserStatic } from '../types';
 import { compare, hash } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import { TUser, TUserMethod, TUserStatic } from '../types/user.types';
+import { JWT_PAYLOAD } from '../types/common.types';
 
 const userSchema = new Schema<TUserMethod>({
   name: { type: String, required: true },
@@ -38,7 +39,7 @@ userSchema.statics.findByEmailAndPassword = async (
     const user = await User.findOne({ email });
     if (!user) throw new Error('Invalid credentials');
     const isMatched = await compare(password, user.password);
-    console.log(isMatched)
+    console.log(isMatched);
     if (!isMatched) throw new Error('Invalid credentials');
     return user;
   } catch (err) {

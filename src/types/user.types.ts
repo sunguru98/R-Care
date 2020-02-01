@@ -1,5 +1,5 @@
-import { Document, Model } from 'mongoose';
-import { ValidationError } from 'express-validator';
+import { Model, Document } from 'mongoose';
+import { TRoute } from './route.types';
 
 export interface UserRegisterRequest {
   name: string;
@@ -42,29 +42,4 @@ export interface TUserStatic extends Model<TUserMethod> {
     email: string,
     password: string
   ) => Promise<TUserMethod | null>;
-}
-
-export interface TStop extends Document {
-  name: string;
-  latitude: number;
-  longitude: number;
-}
-
-export interface TRoute extends Document {
-  name: string;
-  direction: 'up' | 'down';
-  user: TUser;
-  status: 'active' | 'inactive';
-  stops: TStop[];
-  routeType: 'AC' | 'General';
-}
-
-export interface JWT_PAYLOAD {
-  _id: string;
-  email: string;
-}
-
-export interface ErrorMessage {
-  statusCode: 400 | 401 | 404 | 500;
-  message: string | ValidationError[];
 }

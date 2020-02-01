@@ -2,10 +2,10 @@ import { Router, Response } from 'express';
 import {
   UserRegisterRequest,
   UserLoginRequest,
-  ErrorMessage,
   UserResponse,
   UserLogoutResponse
-} from '../types';
+} from '../types/user.types';
+import { ErrorMessage } from '../types/common.types';
 import User from '../models/User';
 import { validationResult, check } from 'express-validator';
 import authenticate from '../middleware/authenticate';

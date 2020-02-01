@@ -1,7 +1,6 @@
-/// <reference path='../../express.d.ts' />
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
-import { JWT_PAYLOAD } from '../types';
+import { JWT_PAYLOAD } from '../types/common.types';
 import User from '../models/User';
 
 const authenticate = async (
