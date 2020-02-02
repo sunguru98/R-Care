@@ -10,7 +10,7 @@ export interface BatchError {
 type Longitude = number;
 type Latitude = number;
 
-interface Stop {
+export interface Stop {
   name: string;
   location: {
     type: 'Point';

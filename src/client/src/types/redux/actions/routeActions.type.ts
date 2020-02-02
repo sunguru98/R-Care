@@ -7,7 +7,10 @@ import {
   CLEAR_ROUTE,
   SET_ROUTE_LOADING,
   SET_ROUTE_ERRORS,
-  CLEAR_ROUTE_ERRORS
+  CLEAR_ROUTE_ERRORS,
+  DELETE_ROUTE,
+  UPDATE_ROUTE,
+  GET_ROUTE
 } from '../actionTypes/route.types';
 import {
   Route,
@@ -15,13 +18,16 @@ import {
   BatchError
 } from '../reducers/routeReducer.type';
 import { ValidationError } from '../reducers/userReducer.type';
+import { RouteInputRequest } from '../sagas/root.type';
 
-interface CreateRouteAction {
+export interface CreateRouteAction {
   type: CREATE_ROUTE;
+  payload: RouteInputRequest;
 }
 
-interface CreateRoutesAction {
+export interface CreateRoutesAction {
   type: CREATE_ROUTES;
+  data: FormData
 }
 
 export interface SetRouteAction {
@@ -56,9 +62,30 @@ export interface ClearRouteErrorsAction {
   type: CLEAR_ROUTE_ERRORS;
 }
 
+export interface DeleteRouteAction {
+  type: DELETE_ROUTE,
+  payload: string
+}
+
+export interface UpdateRouteAction {
+  type: UPDATE_ROUTE,
+  payload: {
+    id: string,
+    route: RouteInputRequest
+  }
+}
+
+export interface GetSingleRouteAction {
+  type: GET_ROUTE,
+  payload: string
+}
+
 export type RouteActions =
   | CreateRouteAction
   | CreateRoutesAction
+  | DeleteRouteAction
+  | UpdateRouteAction
+  | GetSingleRouteAction
   | SetRouteAction
   | SetRoutesAction
   | SetRouteLoadingAction

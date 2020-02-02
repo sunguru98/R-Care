@@ -12,16 +12,19 @@ import {
   UserServerResponse,
   ValidationError
 } from '../reducers/userReducer.type';
+import { LoginPayload, RegisterPayload } from '../sagas/user.type';
 
-interface UserRegisterAction {
+export interface UserRegisterAction {
   type: USER_REGISTER;
+  payload: RegisterPayload;
 }
 
-interface UserLoginAction {
+export interface UserLoginAction {
   type: USER_LOGIN;
+  payload: LoginPayload;
 }
 
-interface UserLogoutAction {
+export interface UserLogoutAction {
   type: USER_LOGOUT;
 }
 
