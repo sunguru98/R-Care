@@ -1,5 +1,8 @@
-export interface UserServerResponse extends UserState {
+export interface UserServerResponse {
   statusCode: 200 | 201;
+  user: User;
+  accessToken: string;
+  expiresIn: string;
 }
 
 export interface ValidationError {

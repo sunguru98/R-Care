@@ -47,6 +47,13 @@ export default (state: RouteState = initialState, action: RouteActions) => {
       return <RouteState>{ ...state, route: null };
     case 'CLEAR_ROUTES':
       return <RouteState>{ ...state, routes: null };
+    case 'RESET_ROUTE_STATE':
+      return <RouteState>{
+        route: null,
+        routes: null,
+        routeLoading: false,
+        errors: null
+      };
     default:
       return state;
   }

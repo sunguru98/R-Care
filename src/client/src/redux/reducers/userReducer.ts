@@ -34,6 +34,13 @@ export default (state: UserState = initialState, action: UserActions) => {
       };
     case 'CLEAR_USER_ERRORS':
       return <UserState>{ ...state, errors: null };
+    case 'RESET_USER_STATE':
+      return <UserState>{
+        errors: null,
+        accessToken: null,
+        user: null,
+        userLoading: false
+      };
     default:
       return state;
   }

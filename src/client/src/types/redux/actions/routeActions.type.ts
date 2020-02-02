@@ -10,7 +10,8 @@ import {
   CLEAR_ROUTE_ERRORS,
   DELETE_ROUTE,
   UPDATE_ROUTE,
-  GET_ROUTE
+  GET_ROUTE,
+  RESET_ROUTE_STATE
 } from '../actionTypes/route.types';
 import {
   Route,
@@ -80,6 +81,10 @@ export interface GetSingleRouteAction {
   payload: string
 }
 
+export interface ResetRouteAction {
+  type: RESET_ROUTE_STATE
+}
+
 export type RouteActions =
   | CreateRouteAction
   | CreateRoutesAction
@@ -92,4 +97,5 @@ export type RouteActions =
   | ClearRouteAction
   | ClearRoutesAction
   | SetRouteErrorsAction
-  | ClearRouteErrorsAction;
+  | ClearRouteErrorsAction
+  | ResetRouteAction;

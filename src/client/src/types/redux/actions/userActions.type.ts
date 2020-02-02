@@ -6,7 +6,8 @@ import {
   CLEAR_USER,
   SET_USER_LOADING,
   CLEAR_USER_ERRORS,
-  SET_USER_ERRORS
+  SET_USER_ERRORS,
+  RESET_USER_STATE
 } from '../actionTypes/user.types';
 import {
   UserServerResponse,
@@ -38,7 +39,7 @@ export interface SetUserLoadingAction {
   payload: boolean;
 }
 
-interface ClearUserAction {
+export interface ClearUserAction {
   type: CLEAR_USER;
 }
 
@@ -51,6 +52,10 @@ export interface ClearUserErrorsAction {
   type: CLEAR_USER_ERRORS;
 }
 
+export interface ResetUserAction {
+  type: RESET_USER_STATE
+}
+
 export type UserActions =
   | UserRegisterAction
   | UserLoginAction
@@ -59,4 +64,5 @@ export type UserActions =
   | SetUserLoadingAction
   | SetUserErrorsAction
   | ClearUserErrorsAction
-  | ClearUserAction;
+  | ClearUserAction
+  | ResetUserAction;
