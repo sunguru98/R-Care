@@ -11,7 +11,8 @@ import {
   DELETE_ROUTE,
   UPDATE_ROUTE,
   GET_ROUTE,
-  RESET_ROUTE_STATE
+  RESET_ROUTE_STATE,
+  GET_ROUTES
 } from '../actionTypes/route.types';
 import {
   Route,
@@ -28,7 +29,7 @@ export interface CreateRouteAction {
 
 export interface CreateRoutesAction {
   type: CREATE_ROUTES;
-  data: FormData
+  payload: FormData;
 }
 
 export interface SetRouteAction {
@@ -64,25 +65,29 @@ export interface ClearRouteErrorsAction {
 }
 
 export interface DeleteRouteAction {
-  type: DELETE_ROUTE,
-  payload: string
+  type: DELETE_ROUTE;
+  payload: string;
 }
 
 export interface UpdateRouteAction {
-  type: UPDATE_ROUTE,
+  type: UPDATE_ROUTE;
   payload: {
-    id: string,
-    route: RouteInputRequest
-  }
+    id: string;
+    route: RouteInputRequest;
+  };
 }
 
 export interface GetSingleRouteAction {
-  type: GET_ROUTE,
-  payload: string
+  type: GET_ROUTE;
+  payload: string;
+}
+
+export interface GetRoutesAction {
+  type: GET_ROUTES;
 }
 
 export interface ResetRouteAction {
-  type: RESET_ROUTE_STATE
+  type: RESET_ROUTE_STATE;
 }
 
 export type RouteActions =
@@ -91,6 +96,7 @@ export type RouteActions =
   | DeleteRouteAction
   | UpdateRouteAction
   | GetSingleRouteAction
+  | GetRoutesAction
   | SetRouteAction
   | SetRoutesAction
   | SetRouteLoadingAction

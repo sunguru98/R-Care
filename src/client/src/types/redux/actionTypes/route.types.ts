@@ -10,4 +10,5 @@ export type CLEAR_ROUTE_ERRORS = 'CLEAR_ROUTE_ERRORS';
 export type DELETE_ROUTE = 'DELETE_ROUTE';
 export type UPDATE_ROUTE = 'UPDATE_ROUTE';
 export type GET_ROUTE = 'GET_ROUTE';
+export type GET_ROUTES = 'GET_ROUTES';
 export type RESET_ROUTE_STATE = 'RESET_ROUTE_STATE';
