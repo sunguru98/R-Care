@@ -4,3 +4,5 @@ export type USER_LOGOUT = 'USER_LOGOUT';
 export type SET_USER = 'SET_USER';
 export type CLEAR_USER = 'CLEAR_USER';
 export type SET_USER_LOADING = 'SET_USER_LOADING';
+export type SET_USER_ERRORS = 'SET_USER_ERRORS';
+export type CLEAR_USER_ERRORS = 'CLEAR_USER_ERRORS';

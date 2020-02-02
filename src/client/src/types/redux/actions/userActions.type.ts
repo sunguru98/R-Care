@@ -4,9 +4,14 @@ import {
   USER_LOGOUT,
   SET_USER,
   CLEAR_USER,
-  SET_USER_LOADING
+  SET_USER_LOADING,
+  CLEAR_USER_ERRORS,
+  SET_USER_ERRORS
 } from '../actionTypes/user.types';
-import { UserServerResponse } from '../reducers/userReducer.type';
+import {
+  UserServerResponse,
+  ValidationError
+} from '../reducers/userReducer.type';
 
 interface UserRegisterAction {
   type: USER_REGISTER;
@@ -34,10 +39,21 @@ interface ClearUserAction {
   type: CLEAR_USER;
 }
 
+export interface SetUserErrorsAction {
+  type: SET_USER_ERRORS;
+  payload: ValidationError[];
+}
+
+export interface ClearUserErrorsAction {
+  type: CLEAR_USER_ERRORS;
+}
+
 export type UserActions =
   | UserRegisterAction
   | UserLoginAction
   | UserLogoutAction
   | SetUserAction
   | SetUserLoadingAction
+  | SetUserErrorsAction
+  | ClearUserErrorsAction
   | ClearUserAction;

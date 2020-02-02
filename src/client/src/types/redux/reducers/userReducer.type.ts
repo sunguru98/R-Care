@@ -2,6 +2,13 @@ export interface UserServerResponse extends UserState {
   statusCode: 200 | 201;
 }
 
+export interface ValidationError {
+  value: string;
+  msg: string;
+  param: string;
+  location: string;
+}
+
 interface User {
   _id: string;
   name: string;
@@ -12,6 +19,6 @@ interface User {
 export interface UserState {
   user: User | null;
   accessToken: string | null;
-  expiresIn: string | null;
   userLoading: boolean;
+  errors: ValidationError[] | null;
 }

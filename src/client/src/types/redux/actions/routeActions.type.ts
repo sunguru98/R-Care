@@ -5,9 +5,16 @@ import {
   SET_ROUTES,
   CLEAR_ROUTES,
   CLEAR_ROUTE,
-  SET_ROUTE_LOADING
+  SET_ROUTE_LOADING,
+  SET_ROUTE_ERRORS,
+  CLEAR_ROUTE_ERRORS
 } from '../actionTypes/route.types';
-import { Route, ExtendedRoute } from '../reducers/routeReducer.type';
+import {
+  Route,
+  ExtendedRoute,
+  BatchError
+} from '../reducers/routeReducer.type';
+import { ValidationError } from '../reducers/userReducer.type';
 
 interface CreateRouteAction {
   type: CREATE_ROUTE;
@@ -40,6 +47,15 @@ interface ClearRouteAction {
   type: CLEAR_ROUTE;
 }
 
+export interface SetRouteErrorsAction {
+  type: SET_ROUTE_ERRORS;
+  payload: ValidationError[] | BatchError[];
+}
+
+export interface ClearRouteErrorsAction {
+  type: CLEAR_ROUTE_ERRORS;
+}
+
 export type RouteActions =
   | CreateRouteAction
   | CreateRoutesAction
@@ -47,4 +63,6 @@ export type RouteActions =
   | SetRoutesAction
   | SetRouteLoadingAction
   | ClearRouteAction
-  | ClearRoutesAction;
+  | ClearRoutesAction
+  | SetRouteErrorsAction
+  | ClearRouteErrorsAction;

@@ -3,13 +3,15 @@ import {
   SetRouteAction,
   SetRoutesAction,
   RouteActions,
-  SetRouteLoadingAction
+  SetRouteLoadingAction,
+  SetRouteErrorsAction
 } from '../../types/redux/actions/routeActions.type';
 
 const initialState: RouteState = {
   routes: null,
   route: null,
-  routeLoading: false
+  routeLoading: false,
+  errors: null
 };
 
 export default (state: RouteState = initialState, action: RouteActions) => {
@@ -34,6 +36,13 @@ export default (state: RouteState = initialState, action: RouteActions) => {
         ...state,
         routeLoading: (action as SetRouteLoadingAction).payload
       };
+    case 'SET_ROUTE_ERRORS':
+      return <RouteState>{
+        ...state,
+        errors: (action as SetRouteErrorsAction).payload
+      };
+    case 'CLEAR_ROUTE_ERRORS':
+      return <RouteState>{ ...state, errors: null };
     case 'CLEAR_ROUTE':
       return <RouteState>{ ...state, route: null };
     case 'CLEAR_ROUTES':

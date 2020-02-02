@@ -1,7 +1,7 @@
 node_modules
-client/node_modules
-client/build
-client/package-lock.json
+src/client/node_modules
+src/client/build
+src/client/package-lock.json
 package-lock.json
 .env
 dist

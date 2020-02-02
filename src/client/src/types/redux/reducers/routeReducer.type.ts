@@ -1,3 +1,12 @@
+import { ValidationError } from './userReducer.type';
+
+export interface BatchError {
+  error: string;
+  prop: string;
+  rowNumber: number;
+  recievedValue: string;
+}
+
 type Longitude = number;
 type Latitude = number;
 
@@ -26,4 +35,5 @@ export interface RouteState {
   routes: Route[] | null;
   route: ExtendedRoute | null;
   routeLoading: boolean;
+  errors: ValidationError[] | BatchError[] | null;
 }
