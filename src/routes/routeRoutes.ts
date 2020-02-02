@@ -138,4 +138,151 @@ router.post<{}, RoutesResponse | ErrorMessage, null>(
   }
 );
 
+// @route - GET routes/
+// @desc - Get all the routes of the logged in user
+// @access - Private (Auth)
+router.get<{}, RoutesResponse | ErrorMessage, null>(
+  '/',
+  authenticate,
+  async (req, res): Promise<typeof res> => {
+    try {
+      const { id } = req.user;
+      const routes = await Route.find({ user: id });
+      if (!routes)
+        return res
+          .status(404)
+          .send({ statusCode: 404, message: 'No routes found' });
+      return res.send({ statusCode: 200, routes: routes });
+    } catch (err) {
+      return res.status(500).send({ statusCode: 500, message: 'Server Error' });
+    }
+  }
+);
+
+// @route - GET routes/:id
+// @desc - Get a route with respect to the user.
+// @access - Private (Auth)
+router.get<{ id: string }, RouteResponse | ErrorMessage, null>(
+  '/:id',
+  authenticate,
+  async (req, res): Promise<typeof res> => {
+    try {
+      const { id } = req.params;
+      if (!id)
+        return res
+          .status(400)
+          .send({ statusCode: 400, message: 'Route Id Invalid' });
+      const route = await Route.findOne({ user: req.user.id, _id: id });
+      if (!route)
+        return res
+          .status(404)
+          .send({ statusCode: 404, message: 'Route not found' });
+      return res.send({ statusCode: 200, route });
+    } catch (err) {
+      if (err.name === 'CastError')
+        return res
+          .status(400)
+          .send({ statusCode: 400, message: 'Invalid Route Id' });
+      return res.status(500).send({ statusCode: 500, message: 'Server Error' });
+    }
+  }
+);
+
+// @route - PUT routes/
+// @desc - Update a route.
+// @access - Private (Auth)
+router.put<{ id: string }, RouteResponse | ErrorMessage, null>(
+  '/:id',
+  check('name', 'Name is required')
+    .not()
+    .isEmpty(),
+  check('direction', 'Direction is required')
+    .not()
+    .isEmpty(),
+  check('status', 'Status is required')
+    .not()
+    .isEmpty(),
+  check('stops', 'Stops is required')
+    .not()
+    .isEmpty(),
+  check('routeType', 'Route Type is required')
+    .not()
+    .isEmpty(),
+  body('stops').custom(val => {
+    if (val.length >= 2) return true;
+    else throw new Error('There should be atleast 2 stops');
+  }),
+  check('status', 'Status should be either active or inactive').isIn([
+    'active',
+    'inactive'
+  ]),
+  check('direction', 'Direction should be either UP or DOWN').isIn([
+    'up',
+    'down'
+  ]),
+  check('routeType', 'Route Type should be either AC or General').isIn([
+    'ac',
+    'general'
+  ]),
+  authenticate,
+  async (req, res): Promise<typeof res> => {
+    try {
+      const { id } = req.params;
+      if (!id)
+        return res
+          .status(400)
+          .send({ statusCode: 400, message: 'Route Id Invalid' });
+      const route = await Route.findOneAndUpdate(
+        { user: req.user.id, _id: id },
+        req.body,
+        { new: true }
+      );
+      if (!route)
+        return res
+          .status(404)
+          .send({ statusCode: 404, message: 'Route not found' });
+      return res.send({ statusCode: 200, route });
+    } catch (err) {
+      if (err.name === 'CastError')
+        return res
+          .status(400)
+          .send({ statusCode: 400, message: 'Invalid Route Id' });
+      return res.status(500).send({ statusCode: 500, message: 'Server Error' });
+    }
+  }
+);
+
+// @route - DELETE routes/:id
+// @desc - Delete a route.
+// @access - Private (Auth)
+router.delete<{ id: string }, RouteResponse | ErrorMessage, null>(
+  '/:id',
+  authenticate,
+  async (req, res): Promise<typeof res> => {
+    try {
+      const { id } = req.params;
+      if (!id)
+        return res
+          .status(400)
+          .send({ statusCode: 400, message: 'Route Id Invalid' });
+      const route = await Route.findOneAndDelete({
+        user: req.user.id,
+        _id: id
+      });
+      console.log(route);
+      if (!route)
+        return res
+          .status(404)
+          .send({ statusCode: 404, message: 'Route not found' });
+      return res.send({ statusCode: 200, route });
+    } catch (err) {
+      if (err.name === 'CastError')
+        return res
+          .status(400)
+          .send({ statusCode: 400, message: 'Invalid Route Id' });
+      return res.status(500).send({ statusCode: 500, message: 'Server Error' });
+    }
+  }
+);
+
 export default router;

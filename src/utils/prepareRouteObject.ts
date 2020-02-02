@@ -1,33 +1,5 @@
 import { TUser } from '../types/user.types';
-import { Schema } from 'mongoose';
-
-interface Stop {
-  name: string;
-  location: { type: string; coordinates: [number, number] };
-}
-
-interface RouteBase {
-  name: string;
-  direction: string;
-  status: string;
-  routeType: string;
-}
-
-interface RouteInput extends RouteBase {
-  stops: string;
-}
-
-interface RouteOutput extends RouteBase {
-  stops: Stop[];
-  user: Schema.Types.ObjectId;
-}
-
-interface RouteError {
-  error: string;
-  rowNumber: number;
-  prop: string;
-  recievedValue: string;
-}
+import { RouteError, RouteInput, RouteOutput, Stop } from '../types/util.types';
 
 const checkForErrors = (
   {

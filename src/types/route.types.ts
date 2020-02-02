@@ -15,12 +15,12 @@ export interface RouteRequest {
 }
 
 export interface RouteResponse {
-  statusCode: 201;
+  statusCode: 201 | 200;
   route: TRoute;
 }
 
 export interface RoutesResponse {
-  statusCode: 201;
+  statusCode: 201 | 200;
   routes: TRoute[];
 }
 
