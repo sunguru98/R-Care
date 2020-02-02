@@ -1,4 +1,4 @@
-import { RouteInputRequest } from '../../types/redux/sagas/root.type';
+import { RouteInputRequest } from '../../types/redux/sagas/route.type';
 import {
   CreateRouteAction,
   UpdateRouteAction,

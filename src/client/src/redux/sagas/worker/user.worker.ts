@@ -25,18 +25,18 @@ export function* onRegister({
       payload: true
     });
     const { data }: AxiosResponse<UserServerResponse> = yield call(() =>
-      Axios.post<UserServerResponse>('/user/register', <RegisterPayload>{
+      Axios.post<UserServerResponse>('/user/register', {
         name,
         email,
         password
-      })
+      } as RegisterPayload)
     );
     // console.log(data);
     Axios.defaults.headers.common['Authorization'] = data.accessToken;
     yield put<SetUserAction>({ type: 'SET_USER', payload: data });
     alert('Registration successful');
   } catch (err) {
-    const { response } = <AxiosError<UserServerError | string>>err;
+    const { response } = err as AxiosError<UserServerError | string>;
     const message = (response?.data as UserServerError).message;
     if (message && Array.isArray(message)) {
       yield put<ClearUserErrorsAction>({ type: 'CLEAR_USER_ERRORS' });
@@ -62,17 +62,17 @@ export function* onLogin({
       payload: true
     });
     const { data }: AxiosResponse<UserServerResponse> = yield call(() =>
-      Axios.post<UserServerResponse>('/user/login', <LoginPayload>{
+      Axios.post<UserServerResponse>('/user/login', {
         email,
         password
-      })
+      } as LoginPayload)
     );
     // console.log(data);
     Axios.defaults.headers.common['Authorization'] = data.accessToken;
     yield put<SetUserAction>({ type: 'SET_USER', payload: data });
     alert('Signin successful');
   } catch (err) {
-    const { response } = <AxiosError<UserServerError | string>>err;
+    const { response } = err as AxiosError<UserServerError | string>;
     const message = (response?.data as UserServerError).message;
     if (message && Array.isArray(message)) {
       yield put<ClearUserErrorsAction>({ type: 'CLEAR_USER_ERRORS' });
@@ -95,7 +95,7 @@ export function* onLogout() {
     yield put<ResetUserAction>({ type: 'RESET_USER_STATE' });
     yield put<ResetRouteAction>({ type: 'RESET_ROUTE_STATE' });
   } catch (err) {
-    const { response } = <AxiosError<UserServerError | string>>err;
+    const { response } = err as AxiosError<UserServerError | string>;
     const message = (response?.data as UserServerError).message as string;
     alert(message);
   } finally {

@@ -15,32 +15,33 @@ const initialState: UserState = {
 
 export default (state: UserState = initialState, action: UserActions) => {
   const { type } = action;
-  const {
-    payload: { user, accessToken }
-  } = <SetUserAction>action;
-  const { payload } = <SetUserLoadingAction>action;
-
+  const { payload } = action as SetUserLoadingAction;
+  const { payload: userPayload } = action as SetUserAction;
   switch (type) {
     case 'SET_USER':
-      return <UserState>{ ...state, user, accessToken };
+      return {
+        ...state,
+        user: userPayload.user,
+        accessToken: userPayload.accessToken
+      } as UserState;
     case 'CLEAR_USER':
-      return <UserState>{ user: null, accessToken: null };
+      return { user: null, accessToken: null } as UserState;
     case 'SET_USER_LOADING':
-      return <UserState>{ ...state, userLoading: payload };
+      return { ...state, userLoading: payload } as UserState;
     case 'SET_USER_ERRORS':
-      return <UserState>{
+      return {
         ...state,
         errors: (action as SetUserErrorsAction).payload
-      };
+      } as UserState;
     case 'CLEAR_USER_ERRORS':
-      return <UserState>{ ...state, errors: null };
+      return { ...state, errors: null } as UserState;
     case 'RESET_USER_STATE':
-      return <UserState>{
+      return {
         errors: null,
         accessToken: null,
         user: null,
         userLoading: false
-      };
+      } as UserState;
     default:
       return state;
   }

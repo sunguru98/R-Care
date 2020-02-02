@@ -1,5 +1,14 @@
 import { ValidationError } from './userReducer.type';
 
+export interface RouteSingleResponse {
+  statusCode: 201 | 200;
+  route: ExtendedRoute;
+}
+
+export interface RouteMultiResponse {
+  statusCode: 201 | 200;
+  routes: Route[];
+}
 export interface BatchError {
   error: string;
   prop: string;

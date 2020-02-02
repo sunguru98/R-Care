@@ -16,44 +16,50 @@ const initialState: RouteState = {
 
 export default (state: RouteState = initialState, action: RouteActions) => {
   const { type } = action;
-  const {
-    payload: { name, stops, status, routeType, _id, direction, user }
-  } = <SetRouteAction>action;
-  const { payload } = <SetRoutesAction>action;
+  const { payload: routePayload } = action as SetRouteAction;
+  const { payload } = action as SetRoutesAction;
   switch (type) {
     case 'SET_ROUTE':
-      return <RouteState>{
+      return {
         ...state,
-        route: { name, stops, status, routeType, _id, direction, user }
-      };
+        route: {
+          name: routePayload.name,
+          stops: routePayload.stops,
+          status: routePayload.status,
+          routeType: routePayload.routeType,
+          _id: routePayload._id,
+          direction: routePayload.direction,
+          user: routePayload.user
+        }
+      } as RouteState;
     case 'SET_ROUTES':
-      return <RouteState>{
+      return {
         ...state,
         routes: [...payload]
-      };
+      } as RouteState;
     case 'SET_ROUTE_LOADING':
-      return <RouteState>{
+      return {
         ...state,
         routeLoading: (action as SetRouteLoadingAction).payload
-      };
+      } as RouteState;
     case 'SET_ROUTE_ERRORS':
-      return <RouteState>{
+      return {
         ...state,
         errors: (action as SetRouteErrorsAction).payload
-      };
+      } as RouteState;
     case 'CLEAR_ROUTE_ERRORS':
-      return <RouteState>{ ...state, errors: null };
+      return { ...state, errors: null } as RouteState;
     case 'CLEAR_ROUTE':
-      return <RouteState>{ ...state, route: null };
+      return { ...state, route: null } as RouteState;
     case 'CLEAR_ROUTES':
-      return <RouteState>{ ...state, routes: null };
+      return { ...state, routes: null } as RouteState;
     case 'RESET_ROUTE_STATE':
-      return <RouteState>{
+      return {
         route: null,
         routes: null,
         routeLoading: false,
         errors: null
-      };
+      } as RouteState;
     default:
       return state;
   }

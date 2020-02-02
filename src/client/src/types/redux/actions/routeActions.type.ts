@@ -20,7 +20,7 @@ import {
   BatchError
 } from '../reducers/routeReducer.type';
 import { ValidationError } from '../reducers/userReducer.type';
-import { RouteInputRequest } from '../sagas/root.type';
+import { RouteInputRequest } from '../sagas/route.type';
 
 export interface CreateRouteAction {
   type: CREATE_ROUTE;
