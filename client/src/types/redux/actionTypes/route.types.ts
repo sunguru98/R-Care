@@ -1,7 +1,0 @@
-export type SET_ROUTE = 'SET_ROUTE';
-export type SET_ROUTES = 'SET_ROUTES';
-export type CLEAR_ROUTES = 'CLEAR_ROUTES';
-export type CLEAR_ROUTE = 'CLEAR_ROUTE';
-export type CREATE_ROUTE = 'CREATE_ROUTE';
-export type CREATE_ROUTES = 'CREATE_ROUTES';
-export type SET_ROUTE_LOADING = 'SET_ROUTE_LOADING';

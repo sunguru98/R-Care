@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { check, validationResult, body } from 'express-validator';
-import multer = require('multer');
+import multer from 'multer';
 
 import upload from '../utils/multer';
 import prepareRouteObject from '../utils/prepareRouteObject';
