@@ -1,9 +1,16 @@
-import { Document, Model } from 'mongoose';
+import { Document, Model, Schema } from 'mongoose';
 import { TUser } from './user.types';
 import { TStop } from './stop.types';
 
 export interface TRoute extends Document, RouteRequest {
   user: TUser;
+}
+
+export interface TMiniRoute {
+  _id: Schema.Types.ObjectId;
+  user: TUser;
+  name: string;
+  status: 'active' | 'inactive';
 }
 
 export interface RouteRequest {
@@ -21,7 +28,7 @@ export interface RouteResponse {
 
 export interface RoutesResponse {
   statusCode: 201 | 200;
-  routes: TRoute[];
+  routes: TMiniRoute[];
 }
 
 export interface TRouteMethod extends TRoute {}

@@ -10,7 +10,8 @@ import Route from '../models/Route';
 import {
   RouteRequest,
   RouteResponse,
-  RoutesResponse
+  RoutesResponse,
+  TMiniRoute
 } from '../types/route.types';
 import { ErrorMessage } from '../types/common.types';
 
@@ -66,7 +67,7 @@ router.post<{}, RouteResponse | ErrorMessage, RouteRequest>(
           statusCode: 400,
           message: 'Route already exists'
         });
-      const route = await Route.create({
+      const route = new Route({
         name,
         direction,
         stops,
@@ -79,6 +80,7 @@ router.post<{}, RouteResponse | ErrorMessage, RouteRequest>(
       await req.user.save();
       return res.status(201).send(<RouteResponse>{ statusCode: 201, route });
     } catch (err) {
+      console.log(err);
       if (err.name === 'ValidationError')
         return res.status(400).send({
           statusCode: 400,
@@ -147,12 +149,20 @@ router.get<{}, RoutesResponse | ErrorMessage, null>(
   async (req, res): Promise<typeof res> => {
     try {
       const { id } = req.user;
-      const routes = await Route.find({ user: id });
+      const routes = (await Route.find({ user: id })) as TMiniRoute[];
       if (!routes)
         return res
           .status(404)
           .send({ statusCode: 404, message: 'No routes found' });
-      return res.send({ statusCode: 200, routes: routes });
+      return res.send({
+        statusCode: 200,
+        routes: routes.map(({ name, status, user, _id }) => ({
+          name,
+          status,
+          user,
+          _id
+        }))
+      });
     } catch (err) {
       return res.status(500).send({ statusCode: 500, message: 'Server Error' });
     }
