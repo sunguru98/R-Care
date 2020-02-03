@@ -1,5 +1,6 @@
 import Axios, { AxiosError, AxiosResponse } from 'axios';
 import { put, call } from 'redux-saga/effects';
+import history from '../../createHistory';
 import {
   UserServerError,
   RegisterPayload,
@@ -25,7 +26,7 @@ export function* onRegister({
       payload: true
     });
     const { data }: AxiosResponse<UserServerResponse> = yield call(() =>
-      Axios.post<UserServerResponse>('/user/register', {
+      Axios.post<UserServerResponse>('/user/signup', {
         name,
         email,
         password
@@ -35,6 +36,7 @@ export function* onRegister({
     Axios.defaults.headers.common['Authorization'] = data.accessToken;
     yield put<SetUserAction>({ type: 'SET_USER', payload: data });
     alert('Registration successful');
+    yield history.push('/dashboard');
   } catch (err) {
     const { response } = err as AxiosError<UserServerError | string>;
     const message = (response?.data as UserServerError).message;
@@ -70,7 +72,8 @@ export function* onLogin({
     // console.log(data);
     Axios.defaults.headers.common['Authorization'] = data.accessToken;
     yield put<SetUserAction>({ type: 'SET_USER', payload: data });
-    alert('Signin successful');
+    yield alert('Signin successful');
+    yield history.push('/dashboard');
   } catch (err) {
     const { response } = err as AxiosError<UserServerError | string>;
     const message = (response?.data as UserServerError).message;
@@ -94,10 +97,11 @@ export function* onLogout() {
     yield call(() => Axios.delete<UserServerResponse>('/user/logout'));
     yield put<ResetUserAction>({ type: 'RESET_USER_STATE' });
     yield put<ResetRouteAction>({ type: 'RESET_ROUTE_STATE' });
+    yield history.push('/');
   } catch (err) {
     const { response } = err as AxiosError<UserServerError | string>;
     const message = (response?.data as UserServerError).message as string;
-    alert(message);
+    yield alert(message);
   } finally {
     yield put<SetUserLoadingAction>({
       type: 'SET_USER_LOADING',

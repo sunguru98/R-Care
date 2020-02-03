@@ -1,6 +1,7 @@
 node_modules
 src/client/node_modules
 src/client/build
+src/client/.env
 src/client/package-lock.json
 package-lock.json
 .env
