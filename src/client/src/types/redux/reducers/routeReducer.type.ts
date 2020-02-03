@@ -20,6 +20,7 @@ type Longitude = number;
 type Latitude = number;
 
 export interface Stop {
+  _id: string;
   name: string;
   location: {
     type: 'Point';

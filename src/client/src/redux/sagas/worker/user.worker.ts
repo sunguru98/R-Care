@@ -94,10 +94,10 @@ export function* onLogin({
 
 export function* onLogout() {
   try {
-    yield call(() => Axios.delete<UserServerResponse>('/user/logout'));
     yield put<ResetUserAction>({ type: 'RESET_USER_STATE' });
     yield put<ResetRouteAction>({ type: 'RESET_ROUTE_STATE' });
     yield history.push('/');
+    call(() => Axios.delete<UserServerResponse>('/user/logout'));
   } catch (err) {
     const { response } = err as AxiosError<UserServerError | string>;
     const message = (response?.data as UserServerError).message as string;
