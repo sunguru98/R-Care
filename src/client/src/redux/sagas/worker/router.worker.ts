@@ -13,6 +13,7 @@ import {
   SetRoutesAction,
   SetRouteAction,
   ClearRouteAction,
+  ClearRoutesAction,
   ClearRouteErrorsAction,
   SetRouteErrorsAction
 } from '../../../types/redux/actions/routeActions.type';
@@ -26,12 +27,13 @@ import { ValidationError } from '../../../types/redux/reducers/userReducer.type'
 
 export function* onFetchRoutes() {
   try {
+    yield put<ClearRoutesAction>({ type: 'CLEAR_ROUTES' });
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
       payload: true
     });
     const { data }: AxiosResponse<RouteMultiResponse> = yield call(() =>
-      Axios.get<RouteMultiResponse>('/routes')
+      Axios.get<RouteMultiResponse>('/routes?large=yes')
     );
     // console.log(data)
     yield put<SetRoutesAction>({ type: 'SET_ROUTES', payload: data.routes });

@@ -47,7 +47,7 @@ export interface SetRouteLoadingAction {
   payload: boolean;
 }
 
-interface ClearRoutesAction {
+export interface ClearRoutesAction {
   type: CLEAR_ROUTES;
 }
 

@@ -7,7 +7,7 @@ export interface RouteSingleResponse {
 
 export interface RouteMultiResponse {
   statusCode: 201 | 200;
-  routes: Route[];
+  routes: Route[] | ExtendedRoute[];
 }
 export interface BatchError {
   error: string;
@@ -45,7 +45,7 @@ export interface ExtendedRoute extends Route {
 }
 
 export interface RouteState {
-  routes: Route[] | null;
+  routes: Route[] | ExtendedRoute[] | null;
   route: ExtendedRoute | null;
   routeLoading: boolean;
   errors: ValidationError[] | BatchError[] | null;
