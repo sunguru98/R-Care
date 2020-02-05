@@ -12,6 +12,7 @@ import {
   SetRouteLoadingAction,
   SetRoutesAction,
   SetRouteAction,
+  ClearRouteAction,
   ClearRouteErrorsAction,
   SetRouteErrorsAction
 } from '../../../types/redux/actions/routeActions.type';
@@ -55,6 +56,7 @@ export function* onFetchSingleRoute({
       type: 'SET_ROUTE_LOADING',
       payload: true
     });
+    yield put<ClearRouteAction>({ type: 'CLEAR_ROUTE' });
     const { data }: AxiosResponse<RouteSingleResponse> = yield call(() =>
       Axios.get<RouteSingleResponse>(`/routes/${payload}`)
     );

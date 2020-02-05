@@ -51,7 +51,7 @@ interface ClearRoutesAction {
   type: CLEAR_ROUTES;
 }
 
-interface ClearRouteAction {
+export interface ClearRouteAction {
   type: CLEAR_ROUTE;
 }
 

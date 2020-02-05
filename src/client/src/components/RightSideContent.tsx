@@ -8,8 +8,14 @@ type ReduxProps = ConnectedProps<typeof connector>;
 
 const RightSideContent: React.FC<ReduxProps> = ({ route }) => {
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <MapComponent />
+    <div
+      style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh'
+      }}>
+      <MapComponent route={route} />
       {route && <RouteDetail route={route} />}
     </div>
   );

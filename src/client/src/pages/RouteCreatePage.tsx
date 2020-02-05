@@ -23,12 +23,6 @@ const RouteCreatePage: React.FC<RouteCreatePageProps> = ({
   routeLoading
 }) => {
   const inputElement = useRef<HTMLInputElement>(null);
-  const autoComplete = useRef<google.maps.places.Autocomplete | null>(null);
-  useEffect(() => {
-    autoComplete.current = new google.maps.places.Autocomplete(
-      inputElement.current!
-    );
-  });
 
   const [formState, setFormState] = useState<
     RouteInputRequest & { stopName: string }
@@ -42,34 +36,35 @@ const RouteCreatePage: React.FC<RouteCreatePageProps> = ({
   });
 
   const { name, stops, routeType, direction, status } = formState;
-  const mapSearchValue = inputElement.current?.value;
 
   useEffect(() => {
-    const mapListener = google.maps.event.addListener(
-      autoComplete.current!,
-      'place_changed',
-      () => {
+    if (inputElement.current) {
+      const autoComplete = new google.maps.places.Autocomplete(
+        inputElement.current as HTMLInputElement
+      );
+      const listener = autoComplete.addListener('place_changed', () => {
+        const { name, geometry } = autoComplete.getPlace();
         const {
-          geometry,
-          name
-        } = autoComplete.current!.getPlace() as google.maps.places.PlaceResult;
-        const lat = geometry!.location.lat();
-        const lng = geometry!.location.lng();
+          location: { lat, lng }
+        } = geometry!;
         const stop: StopUser = {
           name,
-          location: { type: 'Point', coordinates: [lng, lat] }
+          location: {
+            type: 'Point',
+            coordinates: [lng(), lat()]
+          }
         };
         setFormState(prevState => ({
           ...prevState,
           stops: [...prevState.stops, stop]
         }));
-      }
-    );
-    inputElement.current!.value = '';
-    return () => {
-      mapListener.remove();
-    };
-  }, [mapSearchValue]);
+        inputElement.current!.value = '';
+      });
+      return () => {
+        listener.remove();
+      };
+    }
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
