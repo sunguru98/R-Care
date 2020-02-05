@@ -150,10 +150,6 @@ router.get<{}, RoutesResponse | ErrorMessage, null>(
     try {
       const { id } = req.user;
       const routes = (await Route.find({ user: id })) as TMiniRoute[];
-      if (!routes)
-        return res
-          .status(404)
-          .send({ statusCode: 404, message: 'No routes found' });
       return res.send({
         statusCode: 200,
         routes: routes.map(({ name, status, user, _id }) => ({
@@ -279,7 +275,6 @@ router.delete<{ id: string }, RouteResponse | ErrorMessage, null>(
         user: req.user.id,
         _id: id
       });
-      console.log(route);
       if (!route)
         return res
           .status(404)

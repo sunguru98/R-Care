@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import Spinner from '../components/Spinner';
-import RouteList from '../components/RouteList';
 import { ConnectedProps, connect } from 'react-redux';
 import { fetchRoutes } from '../redux/actions/routeActions';
 import { RootState } from '../types/redux/reducers/rootReducer.type';
 import RightSideContent from '../components/RightSideContent';
+import LeftSideContent from '../components/LeftSideContent';
+import Onboarding from '../components/Onboarding';
 
 interface DashboardPageProps extends ReduxProps {}
 type ReduxProps = ConnectedProps<typeof connector>;
@@ -16,13 +17,19 @@ const DashboardPage: React.FC<DashboardPageProps> = ({
 }) => {
   useEffect(() => {
     setTimeout(fetchRoutes, 100);
-  }, []);
+  }, [fetchRoutes]);
 
-  return routeLoading || !routes ? (
-    <Spinner />
-  ) : (
+  return (
     <div style={{ display: 'flex' }}>
-      <RouteList routes={routes} />
+      {!routeLoading && routes ? (
+        routes.length ? (
+          <LeftSideContent routes={routes} />
+        ) : (
+          <Onboarding />
+        )
+      ) : (
+        <Spinner />
+      )}
       <RightSideContent />
     </div>
   );

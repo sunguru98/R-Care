@@ -19,13 +19,16 @@ export interface BatchError {
 type Longitude = number;
 type Latitude = number;
 
-export interface Stop {
-  _id: string;
+export interface StopUser {
   name: string;
   location: {
     type: 'Point';
     coordinates: [Longitude, Latitude];
   };
+}
+
+export interface Stop extends StopUser {
+  _id: string;
 }
 
 export interface Route {

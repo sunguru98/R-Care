@@ -10,7 +10,7 @@ const RouteList: React.FC<RouteListProps> = ({ routes }) => {
     <Fragment>
       {routes.map(
         (route: Route): JSX.Element => (
-          <RouteListItem key={route._id} route={route} />
+          <RouteListItem key={route._id} routeObj={route} />
         )
       )}
     </Fragment>

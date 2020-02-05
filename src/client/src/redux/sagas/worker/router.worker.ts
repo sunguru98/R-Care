@@ -1,4 +1,5 @@
 import Axios, { AxiosError, AxiosResponse } from 'axios';
+import history from '../../createHistory';
 import {
   createRoute,
   createMultipleRoutes,
@@ -80,6 +81,7 @@ export function* onCreateRoute({ payload }: ReturnType<typeof createRoute>) {
     });
     yield call(() => Axios.post<RouteSingleResponse>('/routes', payload));
     // console.log(data)
+    yield history.push('/dashboard');
     yield call(onFetchRoutes);
     yield alert('Route created successfully');
   } catch (err) {
@@ -108,8 +110,9 @@ export function* onCreateRoutes({
       type: 'SET_ROUTE_LOADING',
       payload: true
     });
-    yield call(() => Axios.post<RouteMultiResponse>('/routes', payload));
+    yield call(() => Axios.post<RouteMultiResponse>('/routes/multi', payload));
     // console.log(data)
+    yield history.push('/dashboard');
     yield call(onFetchRoutes);
     yield alert('Routes uploaded successfully');
   } catch (err) {
@@ -139,9 +142,9 @@ export function* onUpdateRoute({
       payload: true
     });
     yield call(() => Axios.put<RouteSingleResponse>(`/routes/${id}`, route));
-    // console.log(data)
-    yield call(onFetchRoutes);
     yield alert('Route updated successfully');
+    yield history.push('/dashboard');
+    yield call(onFetchRoutes);
   } catch (err) {
     const { response } = err as AxiosError<RouteServerError | string>;
     const message = (response?.data as RouteServerError).message;
@@ -168,6 +171,7 @@ export function* onDeleteRoute({ payload }: ReturnType<typeof deleteRoute>) {
     });
     yield call(() => Axios.delete<RouteSingleResponse>(`/routes/${payload}`));
     // console.log(data)
+    yield history.push('/dashboard');
     yield call(onFetchRoutes);
     yield alert('Route updated successfully');
   } catch (err) {

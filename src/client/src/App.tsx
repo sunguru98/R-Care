@@ -7,8 +7,10 @@ import Header from './components/Header';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import RouteUpdatePage from './pages/RouteUpdatePage';
 import DashboardPage from './pages/DashboardPage';
-import RouteAlterPage from './pages/RouteAlterPage';
+import RouteCreatePage from './pages/RouteCreatePage';
+import RouteBatchUploadPage from './pages/RouteBatchUploadPage';
 
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from './types/redux/reducers/rootReducer.type';
@@ -16,9 +18,7 @@ import { RootState } from './types/redux/reducers/rootReducer.type';
 type ReduxProps = ConnectedProps<typeof connector>;
 
 const App: React.FC<ReduxProps> = ({ accessToken }) => {
-  console.log(process.env)
   useEffect(() => {
-    console.log(accessToken)
     if (accessToken)
       Axios.defaults.headers.common['Authorization'] = accessToken;
   });
@@ -30,8 +30,17 @@ const App: React.FC<ReduxProps> = ({ accessToken }) => {
         <Route exact path='/login' component={LoginPage} />
         <Route exact path='/register' component={RegisterPage} />
         <PrivateRoute exact path='/dashboard' component={DashboardPage} />
-        <Route exact path='/route/create' component={RouteAlterPage} />
-        <Route exact path='/route/edit/:routeId' component={RouteAlterPage} />
+        <PrivateRoute exact path='/route/create' component={RouteCreatePage} />
+        <PrivateRoute
+          exact
+          path='/route/create/multi'
+          component={RouteBatchUploadPage}
+        />
+        <PrivateRoute
+          exact
+          path='/route/edit/:routeId'
+          component={RouteUpdatePage}
+        />
         <Redirect to='/' />
       </Switch>
     </React.Fragment>
