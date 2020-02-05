@@ -140,7 +140,7 @@ router.post<{}, RoutesResponse | ErrorMessage, null>(
   }
 );
 
-// @route - GET routes/
+// @route - GET routes/?large=yes|no
 // @desc - Get all the routes of the logged in user
 // @access - Private (Auth)
 router.get<{}, RoutesResponse | ErrorMessage, null>(
@@ -148,16 +148,20 @@ router.get<{}, RoutesResponse | ErrorMessage, null>(
   authenticate,
   async (req, res): Promise<typeof res> => {
     try {
+      const { large } = req.query;
       const { id } = req.user;
       const routes = (await Route.find({ user: id })) as TMiniRoute[];
       return res.send({
         statusCode: 200,
-        routes: routes.map(({ name, status, user, _id }) => ({
-          name,
-          status,
-          user,
-          _id
-        }))
+        routes:
+          large === 'yes'
+            ? routes
+            : routes.map(({ name, status, user, _id }) => ({
+                name,
+                status,
+                user,
+                _id
+              }))
       });
     } catch (err) {
       return res.status(500).send({ statusCode: 500, message: 'Server Error' });
