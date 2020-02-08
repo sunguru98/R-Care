@@ -1,0 +1,17 @@
+.LandingPage {
+  display: flex;
+
+  &__description {
+    margin-top: 2rem;
+  }
+
+  &__buttons {
+    margin-top: 5rem;
+    & a:nth-child(2) {
+      margin-left: 2rem;
+    }
+    .Button {
+      padding: 1.5rem 4rem
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, ChangeEvent } from 'react';
+import React, { FormEvent, useState, ChangeEvent, Fragment } from 'react';
 import { RegisterPayload } from '../types/redux/sagas/user.type';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../types/redux/reducers/rootReducer.type';
@@ -37,48 +37,53 @@ const LoginPage: React.FC<LoginPageProps> = ({
 
   if (user) return <Redirect to='/dashboard' />;
 
-  return userLoading ? (
-    <Spinner />
-  ) : (
-    <section>
-      <form onSubmit={handleSubmit}>
-        <InputField
-          placeholder='Name'
-          isTextArea={false}
-          type='text'
-          required
-          name='name'
-          value={name}
-          onChange={handleChange}
-        />
-        <InputField
-          placeholder='Email'
-          isTextArea={false}
-          type='email'
-          required
-          name='email'
-          value={email}
-          onChange={handleChange}
-        />
-        <InputField
-          placeholder='Password'
-          isTextArea={false}
-          type='password'
-          required
-          name='password'
-          value={password}
-          onChange={handleChange}
-        />
-        <InputField
-          placeholder='Confirm password'
-          isTextArea={false}
-          type='password'
-          required
-          name='cPassword'
-          value={cPassword}
-          onChange={handleChange}
-        />
-        <input type='submit' value='Register' />
+  return (
+    <section className='page'>
+      <form className='Form' onSubmit={handleSubmit}>
+        <h1>{!userLoading ? 'Join us' : 'Please wait'}</h1>
+        {userLoading ? (
+          <Spinner />
+        ) : (
+          <Fragment>
+            <InputField
+              placeholder='Name'
+              isTextArea={false}
+              type='text'
+              required
+              name='name'
+              value={name}
+              onChange={handleChange}
+            />
+            <InputField
+              placeholder='Email'
+              isTextArea={false}
+              type='email'
+              required
+              name='email'
+              value={email}
+              onChange={handleChange}
+            />
+            <InputField
+              placeholder='Password'
+              isTextArea={false}
+              type='password'
+              required
+              name='password'
+              value={password}
+              onChange={handleChange}
+            />
+            <InputField
+              placeholder='Confirm password'
+              isTextArea={false}
+              type='password'
+              required
+              name='cPassword'
+              value={cPassword}
+              onChange={handleChange}
+            />
+            <input className='Button' type='submit' value='Register' />
+          </Fragment>
+        )}
       </form>
     </section>
   );

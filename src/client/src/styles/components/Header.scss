@@ -1,0 +1,23 @@
+@import '../colors';
+.Header {
+  height: 10rem;
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__logo {
+    color: $black-color;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & a:nth-child(2), span {
+      margin-left: 2rem;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,128 @@
+@import 'colors';
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: $background-color;
+  color: $black-color;
+}
+
+small {
+  color: $red-color;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+input:not([type='submit']) {
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  color: $primary-color;
+  transition: all 0.3s;
+  border: 2px solid darken($background-color, 10%);
+}
+
+input:focus {
+  border-color: $primary-color;
+}
+
+input[type='submit'] {
+  color: $white-color;
+  cursor: pointer;
+  border-radius: 0.75rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 10rem);
+  width: 100vw;
+}
+
+.purple {
+  color: $primary-color !important;
+}
+
+.green {
+  color: $secondary-color !important;
+}
+
+.Button {
+  background: $primary-color;
+  color: $white-color;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  & .big {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  &.inverted {
+    background: $white-color;
+    color: $primary-color;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: 0 0 1rem rgba($black-color, 0.2);
+    }
+  }
+}
+
+.Form {
+  position: relative;
+  background: $white-color;
+  padding: 1rem;
+  border-radius: 1rem;
+  min-height: 80vh;
+  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & h1 {
+    margin-bottom: 2rem;
+  }
+
+  & .InputField {
+    width: 80%;
+    &__error {
+      display: inline-block;
+      margin-left: 2rem;
+      margin-top: 1rem;
+    }
+    & input {
+      width: 100%;
+      &.error {
+        border-color: $red-color;
+      }
+      &.disabled {
+        background: darken($background-color, 20%);
+        cursor: not-allowed;
+      }
+    }
+    &:not(:first-child) {
+      margin-top: 2rem;
+    }
+  }
+  & .Button {
+    width: 40%;
+    margin-top: 5rem;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, ChangeEvent } from 'react';
+import React, { FormEvent, useState, ChangeEvent, Fragment } from 'react';
 import { LoginPayload } from '../types/redux/sagas/user.type';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../types/redux/reducers/rootReducer.type';
@@ -32,30 +32,40 @@ const LoginPage: React.FC<LoginPageProps> = ({
 
   if (user) return <Redirect to='/dashboard' />;
 
-  return userLoading ? (
-    <Spinner />
-  ) : (
-    <section>
-      <form onSubmit={handleSubmit}>
-        <InputField
-          placeholder='Email'
-          isTextArea={false}
-          type='email'
-          required
-          name='email'
-          value={email}
-          onChange={handleChange}
-        />
-        <InputField
-          placeholder='Password'
-          isTextArea={false}
-          type='password'
-          required
-          name='password'
-          value={password}
-          onChange={handleChange}
-        />
-        <input type='submit' value='Login' />
+  return (
+    <section className='LoginPage page'>
+      <form className='Form' onSubmit={handleSubmit}>
+        <h1>{!userLoading ? 'Welcome back' : 'Please wait'}</h1>
+        {userLoading ? (
+          <Spinner />
+        ) : (
+          <Fragment>
+            <InputField
+              placeholder='Email'
+              isTextArea={false}
+              type='email'
+              required
+              name='email'
+              value={email}
+              onChange={handleChange}
+            />
+            <InputField
+              placeholder='Password'
+              isTextArea={false}
+              type='password'
+              required
+              name='password'
+              value={password}
+              onChange={handleChange}
+            />
+            <input
+              className={`Button ${userLoading ? 'disabled' : ''}`}
+              disabled={userLoading}
+              type='submit'
+              value='Login'
+            />
+          </Fragment>
+        )}
       </form>
     </section>
   );

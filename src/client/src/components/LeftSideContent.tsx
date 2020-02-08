@@ -28,7 +28,7 @@ const LeftSideContent: React.FC<LeftSideComponentProps> = ({ routes }) => {
       'Route-Type': routeType
     })
   );
-  console.log(data);
+  
   return (
     <div>
       <Link to='/route/create'>

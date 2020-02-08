@@ -147,9 +147,11 @@ const RouteCreatePage: React.FC<RouteCreatePageProps> = ({
   );
 };
 
-const mapStateToProps = ({ route: { routeLoading } }: RootState) => ({
-  routeLoading
+const mapStateToProps = ({ route: { routeLoading, errors } }: RootState) => ({
+  routeLoading,
+  errors
 });
+
 const mapDispatchToProps = { createRoute: createRoute };
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

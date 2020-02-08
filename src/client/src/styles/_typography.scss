@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
+
+@import 'colors';
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: Lato, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+h1 {
+  font-size: 4rem;
+  &.xl {
+    font-size: 5rem;
+  }
+}
+
+p {
+  font-weight: bold;
+  line-height: 1.7;
+}
+
+small {
+  font-weight: 1.1rem;
+
+}
+
+input {
+  font-family: Lato, sans-serif;
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+input[type='submit'] {
+  font-size: 2rem;
+}
+
+
+.Header__logo {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.Button {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.LandingPage__buttons .Button {
+  font-size: 1.8rem;
+}
