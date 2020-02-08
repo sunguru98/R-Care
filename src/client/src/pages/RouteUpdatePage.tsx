@@ -3,9 +3,9 @@ import React, {
   useEffect,
   useRef,
   FormEvent,
-  ChangeEvent
+  ChangeEvent,
+  Fragment
 } from 'react';
-import { GoogleApiWrapper, ProvidedProps } from 'google-maps-react';
 import { RouteInputRequest } from '../types/redux/sagas/route.type';
 import { RouteComponentProps } from 'react-router-dom';
 import { StopUser } from '../types/redux/reducers/routeReducer.type';
@@ -15,11 +15,12 @@ import { RootState } from '../types/redux/reducers/rootReducer.type';
 
 import Spinner from '../components/Spinner';
 import InputField from '../components/InputField';
+import SelectField from '../components/SelectField';
+import StopBadge from '../components/StopBadge';
 
 interface RouteUpdatePageProps
   extends RouteComponentProps<{ routeId: string }>,
-    ReduxProps,
-    ProvidedProps {}
+    ReduxProps {}
 type ReduxProps = ConnectedProps<typeof connector>;
 
 const RouteUpdatePage: React.FC<RouteUpdatePageProps> = ({
@@ -30,7 +31,7 @@ const RouteUpdatePage: React.FC<RouteUpdatePageProps> = ({
   match
 }) => {
   const inputElement = useRef<HTMLInputElement>(null);
-
+  const [routeName, setRouteName] = useState<string>('');
   const [formState, setFormState] = useState<RouteInputRequest>({
     name: '',
     stops: [],
@@ -40,7 +41,7 @@ const RouteUpdatePage: React.FC<RouteUpdatePageProps> = ({
   });
 
   useEffect(() => {
-    getSingleRoute(match.params.routeId);
+    setTimeout(() => getSingleRoute(match.params.routeId), 10);
   }, [getSingleRoute, match.params.routeId]);
 
   useEffect(() => {
@@ -75,6 +76,7 @@ const RouteUpdatePage: React.FC<RouteUpdatePageProps> = ({
   useEffect(() => {
     if (route) {
       const { name, routeType, status, stops, direction } = route;
+      setRouteName(name);
       setFormState(() => ({ name, routeType, status, stops, direction }));
     }
   }, [route]);
@@ -106,61 +108,98 @@ const RouteUpdatePage: React.FC<RouteUpdatePageProps> = ({
   };
 
   return (
-    <section>
+    <section className='page'>
       {routeLoading ? (
         <Spinner />
       ) : (
-        <form onSubmit={handleSubmit}>
-          <InputField
-            required
-            name='name'
-            type='text'
-            placeholder='Route name'
-            value={name}
-            onChange={handleChange}
-            isTextArea={false}
+        <form className='Form' onSubmit={handleSubmit}>
+          <h1>{!routeLoading ? `Update route ${routeName}` : 'Please wait'}</h1>
+          {routeLoading ? (
+            <Spinner />
+          ) : (
+            <Fragment>
+              <InputField
+                required
+                name='name'
+                type='text'
+                placeholder='Route name'
+                value={name}
+                onChange={handleChange}
+                isTextArea={false}
+              />
+              <div className='MapField'>
+                <input name='stop' ref={inputElement} />
+                <ul
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'flex-start'
+                  }}>
+                  {stops.map((stop, index) => (
+                    <StopBadge
+                      key={index}
+                      stopName={stop.name}
+                      onClick={() => handleDelete(index)}
+                    />
+                  ))}
+                </ul>
+              </div>
+              <SelectField
+                className='SelectField'
+                name='routeType'
+                required
+                value={routeType}
+                onChange={handleChange}
+                optionValues={[
+                  {
+                    value: '',
+                    text: 'Please select a route type',
+                    isDisabled: true
+                  },
+                  { value: 'ac', text: 'AC' },
+                  { value: 'general', text: 'General' }
+                ]}
+              />
+              <SelectField
+                className='SelectField'
+                name='direction'
+                required
+                value={direction}
+                onChange={handleChange}
+                optionValues={[
+                  {
+                    value: '',
+                    text: 'Please select a route direction',
+                    isDisabled: true
+                  },
+                  { value: 'up', text: 'Up' },
+                  { value: 'down', text: 'Down' }
+                ]}
+              />
+              <SelectField
+                className='SelectField'
+                name='status'
+                required
+                value={status}
+                onChange={handleChange}
+                optionValues={[
+                  {
+                    value: '',
+                    text: 'Please select a route status',
+                    isDisabled: true
+                  },
+                  { value: 'active', text: 'Active' },
+                  { value: 'inactive', text: 'Inactive' }
+                ]}
+              />
+            </Fragment>
+          )}
+          <input
+            className={`Button ${routeLoading ? 'disabled' : ''}`}
+            disabled={routeLoading}
+            type='submit'
+            value='Update Route'
           />
-          <select
-            name='routeType'
-            required
-            value={routeType}
-            onChange={handleChange}>
-            <option value='' disabled>
-              Please select a route type
-            </option>
-            <option value='ac'>AC</option>
-            <option value='general'>General</option>
-          </select>
-          <select
-            name='direction'
-            required
-            value={direction}
-            onChange={handleChange}>
-            <option value='' disabled>
-              Please select a Route direction
-            </option>
-            <option value='up'>Up</option>
-            <option value='down'>Down</option>
-          </select>
-          <select name='status' value={status} onChange={handleChange}>
-            <option value='' disabled>
-              Please select a Route status
-            </option>
-            <option value='active'>Active</option>
-            <option value='general'>Inactive</option>
-          </select>
-          <div>
-            <input name='stop' ref={inputElement} />
-            <ul>
-              {stops.map((stop, index) => (
-                <li key={index}>
-                  <span onClick={() => handleDelete(index)}>Delete</span>
-                  {stop.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <input type='submit' value='Update Route' />
         </form>
       )}
     </section>
@@ -177,6 +216,4 @@ const mapDispatchToProps = {
 };
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyAINrQuXpXkbUE6EHL8ZWJDvxci2wDVjWw'
-})(connector(RouteUpdatePage));
+export default connector(RouteUpdatePage);

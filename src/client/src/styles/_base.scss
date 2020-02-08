@@ -25,18 +25,19 @@ ul {
   list-style: none;
 }
 
-input:not([type='submit']) {
+input:not([type='submit']),
+select {
+  background: transparent;
   outline: none;
-  border: none;
   border-radius: 0.5rem;
   padding: 2rem;
   color: $primary-color;
   transition: all 0.3s;
-  border: 2px solid darken($background-color, 10%);
+  border: 2px solid darken($background-color, 10%) !important;
 }
 
-input:focus {
-  border-color: $primary-color;
+input:focus, select:focus {
+  border-color: $primary-color !important;
 }
 
 input[type='submit'] {
@@ -56,6 +57,10 @@ input[type='submit'] {
   width: 100vw;
 }
 
+.horizontal {
+  flex-direction: row;
+}
+
 .purple {
   color: $primary-color !important;
 }
@@ -69,6 +74,8 @@ input[type='submit'] {
   color: $white-color;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
+  outline-color: $primary-color;
+  outline-offset: .5rem;
   & .big {
     padding-left: 5rem;
     padding-right: 5rem;
@@ -100,22 +107,25 @@ input[type='submit'] {
     margin-bottom: 2rem;
   }
 
-  & .InputField {
+  input:not([type='submit']),
+  select {
+    width: 100%;
+    &.error {
+      border-color: $red-color;
+    }
+    &.disabled {
+      background: darken($background-color, 20%);
+      cursor: not-allowed;
+    }
+  }
+
+  & .InputField,
+  .SelectField, .MapField {
     width: 80%;
     &__error {
       display: inline-block;
       margin-left: 2rem;
       margin-top: 1rem;
-    }
-    & input {
-      width: 100%;
-      &.error {
-        border-color: $red-color;
-      }
-      &.disabled {
-        background: darken($background-color, 20%);
-        cursor: not-allowed;
-      }
     }
     &:not(:first-child) {
       margin-top: 2rem;

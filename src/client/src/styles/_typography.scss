@@ -32,10 +32,9 @@ p {
 
 small {
   font-weight: 1.1rem;
-
 }
 
-input {
+input, select {
   font-family: Lato, sans-serif;
   font-weight: bold;
   font-size: 1.6rem;
@@ -44,7 +43,6 @@ input {
 input[type='submit'] {
   font-size: 2rem;
 }
-
 
 .Header__logo {
   font-size: 3rem;
@@ -58,4 +56,10 @@ input[type='submit'] {
 
 .LandingPage__buttons .Button {
   font-size: 1.8rem;
+}
+
+.StopBadge {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.4rem;
 }

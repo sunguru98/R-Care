@@ -16,11 +16,11 @@ const DashboardPage: React.FC<DashboardPageProps> = ({
   fetchRoutes
 }) => {
   useEffect(() => {
-    setTimeout(fetchRoutes, 100);
+    setTimeout(fetchRoutes, 10);
   }, [fetchRoutes]);
 
   return (
-    <div style={{ display: 'flex' }}>
+    <section className='page horizontal'>
       {!routeLoading && routes ? (
         routes.length ? (
           <LeftSideContent routes={routes} />
@@ -31,7 +31,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({
         <Spinner />
       )}
       <RightSideContent />
-    </div>
+    </section>
   );
 };
 

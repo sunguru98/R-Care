@@ -27,7 +27,6 @@ const RouteListItem: React.FC<RouteListItemProps> = ({
   };
 
   const handleUpdate = (e: React.MouseEvent<HTMLSpanElement>): void => {
-    console.log('Clicking');
     e.stopPropagation();
     history.push(`/route/edit/${_id}`);
   };

@@ -110,9 +110,9 @@ router.post<{}, RoutesResponse | ErrorMessage, null>(
         const [titleRow, ...rest] = csvData.split('\n');
         const title = titleRow.split(',').slice(1);
         if (title.length < 5)
-          return res.send({
+          return res.status(400).send({
             statusCode: 400,
-            message: 'CSV Badly Formatted'
+            message: 'CSV Title Badly Formatted'
           });
         try {
           const routes = prepareRouteObject(rest, req.user);

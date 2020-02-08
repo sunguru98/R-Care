@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react';
+import React, { useState, FormEvent, ChangeEvent, Fragment } from 'react';
 import Spinner from '../components/Spinner';
 import BatchUploadErrorList from '../components/BatchUploadErrorList';
 import { connect, ConnectedProps } from 'react-redux';
@@ -16,7 +16,6 @@ const RouteBatchUploadPage: React.FC<RouteBatchUploadPageProps> = ({
 }) => {
   const [file, setFile] = useState<File | null>(null);
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    console.log('Is it working?');
     e.preventDefault();
     if (
       file &&
@@ -44,40 +43,83 @@ const RouteBatchUploadPage: React.FC<RouteBatchUploadPageProps> = ({
   };
 
   return (
-    <div>
-      <h1>Upload CSV File</h1>
-      <p>
-        Before uploading the routes file. Kindly follow the instructions below,
-        to get a perfect match in upload result.
-      </p>
-      <ul>
-        <li>
-          The order must be as S.No, Name, Direction, Status, Stops and
-          Route-Type
-        </li>
-        <li>Direction should be either up or down</li>
-        <li>Status should be either active or inactive</li>
-        <li>Route Type should be either AC or General</li>
-        <li>
-          Stops should be of the following format
-          <ul>
-            <li>Stop name - (Longitude:Latitude)</li>
-            <li>Each stop should be separated by &</li>
-          </ul>
-        </li>
-      </ul>
-      {!routeLoading ? (
-        <form onSubmit={handleSubmit}>
-          <input required type='file' onChange={handleChange} name='file' />
-          <input type='submit' value='Upload File' />
-        </form>
-      ) : (
-        <Spinner />
-      )}
-      {errors && errors.length ? (
-        <BatchUploadErrorList errors={errors as BatchError[]} />
-      ) : null}
-    </div>
+    <section className='page' style={{ height: 'calc(105vh - 10rem)' }}>
+      <div className='Form' style={{ padding: '3rem' }}>
+        <h1>{!routeLoading ? 'Upload CSV File' : 'Please wait'}</h1>
+        {routeLoading ? (
+          <Spinner />
+        ) : (
+          <Fragment>
+            <p style={{ textAlign: 'center' }}>
+              Before uploading the routes file, <br /> Kindly follow the
+              instructions below, to get a perfect match in upload result.
+            </p>
+            <ol style={{ lineHeight: 1.5, margin: '2rem 0', width: '85%' }}>
+              <li>
+                The order of the columns must be as the following
+                <ul
+                  style={{
+                    listStyle: 'circle',
+                    marginLeft: '2rem'
+                  }}>
+                  <li>S.No</li>
+                  <li>Name</li>
+                  <li>Direction</li>
+                  <li>Status</li>
+                  <li>Stops</li>
+                  <li>Route-Type</li>
+                </ul>
+              </li>
+              <li>
+                Direction should be either <strong>up</strong> or{' '}
+                <strong>down</strong>
+              </li>
+              <li>
+                Status should be either <strong>active</strong> or{' '}
+                <strong>inactive</strong>
+              </li>
+              <li>
+                Route Type should be either <strong>AC</strong> or{' '}
+                <strong>General</strong>
+              </li>
+              <li>
+                Stops should be of the following format
+                <ul
+                  style={{
+                    listStyle: 'circle',
+                    marginLeft: '2rem'
+                  }}>
+                  <li>
+                    Stop name - <strong>(Longitude:Latitude)</strong>
+                  </li>
+                  <li>
+                    Each stop should be separated by <strong>"&"</strong>
+                  </li>
+                </ul>
+              </li>
+            </ol>
+
+            <form onSubmit={handleSubmit}>
+              <input required type='file' onChange={handleChange} name='file' />
+              <input
+                style={{
+                  marginTop: '2rem',
+                  marginLeft: '50%',
+                  transform: 'translateX(-50%)'
+                }}
+                className={`Button ${routeLoading ? 'disabled' : ''}`}
+                disabled={routeLoading}
+                type='submit'
+                value='Upload file'
+              />
+            </form>
+          </Fragment>
+        )}
+        {errors && errors.length ? (
+          <BatchUploadErrorList errors={errors as BatchError[]} />
+        ) : null}
+      </div>
+    </section>
   );
 };
 

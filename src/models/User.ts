@@ -59,7 +59,7 @@ userSchema.pre<TUser>('save', async function(
 
 userSchema.pre<TUser>('remove', async function(next: HookNextFunction) {
   await Route.deleteMany({ user: this.id });
-  next()
+  next();
 });
 
 const User = model<TUserMethod, TUserStatic>('user', userSchema);

@@ -128,7 +128,7 @@ export function* onCreateRoutes({
         type: 'SET_ROUTE_ERRORS',
         payload: message as BatchError[]
       });
-    }
+    } else alert(message)
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
