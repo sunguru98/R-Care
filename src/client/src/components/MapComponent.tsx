@@ -21,15 +21,14 @@ const MapComponent: React.FC<MapComponentProps> = ({ route }) => {
   });
 
   const { coordinates, map, polyline, markers } = locationDetails;
-
   const mapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setLocationDetails(prevState => ({
       ...prevState,
       map: new google.maps.Map<HTMLDivElement>(mapRef.current!, {
-        center: { lat: 22.4808921, lng: 80.6882728 },
-        zoom: 6,
+        center: new google.maps.LatLng(22.4808921, 79.6882728),
+        zoom: 5,
         gestureHandling: 'cooperative'
       })
     }));
@@ -48,14 +47,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ route }) => {
           strokeOpacity: 1,
           strokeWeight: 5
         }),
-        markers: [
-          new google.maps.Marker({
-            position: coordinates[0]
-          }),
-          new google.maps.Marker({
-            position: coordinates[coordinates.length - 1]
-          })
-        ]
+        markers: coordinates.map(c => new google.maps.Marker({ position: c }))
       }));
     }
   }, [coordinates, map]);
@@ -68,8 +60,14 @@ const MapComponent: React.FC<MapComponentProps> = ({ route }) => {
         .getPath()
         .getArray()
         .forEach(p => bounds.extend(p));
-      markers[0].setMap(map);
-      markers[1].setMap(map);
+      markers.forEach(m => {
+        m.setMap(map);
+        m.addListener('click', marker => {
+          const { lat, lng } = marker.latLng as google.maps.LatLng;
+          map?.setCenter(new google.maps.LatLng(lat(), lng()));
+          map?.setZoom(17);
+        });
+      });
       map!.fitBounds(bounds);
     }
   }, [polyline]);

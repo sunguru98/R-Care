@@ -6,6 +6,7 @@ import {
   ExtendedRoute
 } from '../types/redux/reducers/routeReducer.type';
 import { CSVLink } from 'react-csv';
+import '../styles/components/LeftSideContent.scss';
 
 interface LeftSideComponentProps {
   routes: Route[] | ExtendedRoute[];
@@ -28,19 +29,24 @@ const LeftSideContent: React.FC<LeftSideComponentProps> = ({ routes }) => {
       'Route-Type': routeType
     })
   );
-  
+
   return (
-    <div>
-      <Link to='/route/create'>
-        <button>Create new route</button>
-      </Link>
-      <Link to='/route/create/multi'>
-        <button>Upload CSV File</button>
-      </Link>
+    <div className='LeftSideContent'>
+      <div className='LeftSideContent__buttons'>
+        <Link to='/route/create'>
+          <button className='Button'>Create new route</button>
+        </Link>
+        <Link to='/route/create/multi'>
+          <button className='Button yellow'>Upload CSV File</button>
+        </Link>
+      </div>
       <RouteList routes={routes} />
       {routes.length ? (
-        <CSVLink style={{ color: 'red' }} data={data} filename='routes.csv'>
-          Download all Routes
+        <CSVLink
+          className='Export Button red'
+          data={data}
+          filename='routes.csv'>
+          Export all Routes
         </CSVLink>
       ) : null}
     </div>

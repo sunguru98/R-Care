@@ -1,0 +1,27 @@
+.LeftSideContent {
+  position: relative;
+  flex-basis: 40vh;
+  height: 100%;
+  padding: 1rem;
+
+  & .Export {
+    width: 60%;
+    text-align: center;
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & button {
+      cursor: pointer;
+    }
+    & a:nth-child(2) {
+      margin-top: 1rem;
+    }
+  }
+}

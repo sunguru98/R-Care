@@ -4,6 +4,9 @@ import { connect, ConnectedProps } from 'react-redux';
 import { getSingleRoute, deleteRoute } from '../redux/actions/routeActions';
 import { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import '../styles/components/RouteListItem.scss';
+import { ReactComponent as EditIcon } from '../edit.svg';
+import { ReactComponent as DeleteIcon } from '../trash.svg';
 
 interface RouteListItemProps extends ReduxProps, RouteComponentProps<{}> {
   routeObj: Route;
@@ -32,11 +35,19 @@ const RouteListItem: React.FC<RouteListItemProps> = ({
   };
 
   return (
-    <div onClick={handleClick}>
-      <span onClick={handleUpdate}>Update</span>
-      <span onClick={handleDelete}>Delete</span>
-      <h3>Name: {name}</h3>
-      <h4>Status: {status}</h4>
+    <div className='RouteListItem' onClick={handleClick}>
+      <div className='RouteListItem__info'>
+        <h3>Name: {name}</h3>
+        <h4>Status: {status}</h4>
+      </div>
+      <div className='RouteListItem__buttons'>
+        <span className='RouteListItem__update' onClick={handleUpdate}>
+          <EditIcon />
+        </span>
+        <span className='RouteListItem__delete' onClick={handleDelete}>
+          <DeleteIcon />
+        </span>
+      </div>
     </div>
   );
 };

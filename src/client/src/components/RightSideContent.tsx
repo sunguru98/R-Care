@@ -13,7 +13,7 @@ const RightSideContent: React.FC<ReduxProps> = ({ route }) => {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        height: '100vh'
+        height: '100%'
       }}>
       <MapComponent route={route} />
       {route && <RouteDetail route={route} />}

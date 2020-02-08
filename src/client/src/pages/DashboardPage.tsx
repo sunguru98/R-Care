@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import Spinner from '../components/Spinner';
 import { ConnectedProps, connect } from 'react-redux';
 import { fetchRoutes } from '../redux/actions/routeActions';
@@ -23,14 +23,16 @@ const DashboardPage: React.FC<DashboardPageProps> = ({
     <section className='page horizontal'>
       {!routeLoading && routes ? (
         routes.length ? (
-          <LeftSideContent routes={routes} />
+          <Fragment>
+            <LeftSideContent routes={routes} />
+            <RightSideContent />
+          </Fragment>
         ) : (
           <Onboarding />
         )
       ) : (
         <Spinner />
       )}
-      <RightSideContent />
     </section>
   );
 };

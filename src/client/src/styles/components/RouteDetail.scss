@@ -1,0 +1,29 @@
+@import '../colors';
+.RouteDetail {
+  margin: 1rem;
+  min-height: 40vh;
+  padding: 1.5rem;
+  background: $primary-color;
+  color: $white-color;
+  border-radius: 0.5rem;
+
+  & ul {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  & span {
+    display: inline-block;
+    margin-top: 1rem;
+  }
+  & .MiniBadge {
+    margin-top: 1rem;
+    background: $white-color;
+    color: $primary-color;
+    border-radius: 10rem;
+    padding: 1rem 2rem;
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}

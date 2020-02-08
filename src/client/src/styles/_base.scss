@@ -36,7 +36,8 @@ select {
   border: 2px solid darken($background-color, 10%) !important;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   border-color: $primary-color !important;
 }
 
@@ -71,15 +72,35 @@ input[type='submit'] {
 
 .Button {
   background: $primary-color;
+  transition: all 0.3s;
   color: $white-color;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
   outline-color: $primary-color;
-  outline-offset: .5rem;
-  & .big {
+  outline-offset: 0.5rem;
+  &.big {
     padding-left: 5rem;
     padding-right: 5rem;
   }
+
+  &.red {
+    border: 2px solid $red-color;
+    color: $red-color;
+    background: transparent;
+    outline-color: $red-color;
+
+    &:hover {
+      cursor: pointer;
+      background: $red-color;
+      color: $white-color;
+    }
+  }
+
+  &.yellow {
+    background: $secondary-color;
+    outline-color: $secondary-color !important;
+  }
+
   &.inverted {
     background: $white-color;
     color: $primary-color;
@@ -120,7 +141,8 @@ input[type='submit'] {
   }
 
   & .InputField,
-  .SelectField, .MapField {
+  .SelectField,
+  .MapField {
     width: 80%;
     &__error {
       display: inline-block;

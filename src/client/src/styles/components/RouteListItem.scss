@@ -1,0 +1,47 @@
+@import '../colors';
+
+.RouteListItem {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+  border: 2px solid $primary-color;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+
+  &__info {
+    align-self: center;
+    & h4 {
+      margin-top: 1rem;
+    }
+  }
+
+  &__update,
+  &__delete {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 1rem;
+    box-sizing: content-box;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__update {
+    background: $secondary-color;
+  }
+
+  &__delete {
+    margin-top: .75rem;
+    background: $red-color;
+  }
+
+  &:hover {
+    background: $primary-color;
+    color: $white-color;
+    cursor: pointer;
+  }
+}

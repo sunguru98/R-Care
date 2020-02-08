@@ -6,7 +6,8 @@ html {
   font-size: 62.5%;
 }
 
-body {
+body,
+a {
   font-size: 1.6rem;
   font-family: Lato, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -34,7 +35,8 @@ small {
   font-weight: 1.1rem;
 }
 
-input, select {
+input,
+select {
   font-family: Lato, sans-serif;
   font-weight: bold;
   font-size: 1.6rem;
@@ -62,4 +64,20 @@ input[type='submit'] {
   text-align: center;
   font-weight: bold;
   font-size: 1.4rem;
+}
+
+.MiniBadge {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.RouteDetail {
+  h3 {
+    font-size: 3.5rem;
+  }
+
+  p {
+    font-size: 2rem;
+  }
 }

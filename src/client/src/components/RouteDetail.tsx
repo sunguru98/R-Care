@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExtendedRoute } from '../types/redux/reducers/routeReducer.type';
+import '../styles/components/RouteDetail.scss';
 
 interface RouteDetailProps {
   route: ExtendedRoute;
@@ -9,16 +10,19 @@ const RouteDetail: React.FC<RouteDetailProps> = ({
   route: { name, status, routeType, direction, stops }
 }) => {
   return (
-    <div>
-      <h3>Name: {name}</h3>
-      <h4>Status: {status}</h4>
-      <p>Route Type: {routeType}</p>
+    <div className='RouteDetail'>
+      <h3>
+        {name} ({status})
+      </h3>
+      <p>Route: {routeType}</p>
       <p>Direction: {direction}</p>
       <span>
         Stops:{' '}
-        <ul>
+        <ul style={{ width: '100%' }}>
           {stops.map(s => (
-            <li key={s._id}>{s.name}</li>
+            <li className='MiniBadge' key={s._id}>
+              {s.name}
+            </li>
           ))}
         </ul>
       </span>

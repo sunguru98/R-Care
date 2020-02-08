@@ -10,7 +10,7 @@ interface HeaderProps extends ReduxProps {}
 
 const Header: React.FC<HeaderProps> = ({ user, logOutUser }) => (
   <header className='Header'>
-    <Link to='/' className='Header__logo'>
+    <Link to={user ? '/dashboard' : '/'} className='Header__logo'>
       <span className='Header__logo'>R</span>
       <span className='Header__logo purple'>-Care</span>
     </Link>
@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ user, logOutUser }) => (
           <Link className='Button' to='/dashboard'>
             Dashboard
           </Link>
-          <span className='Button inverted' onClick={logOutUser}>
+          <span role='button' className='Button inverted' onClick={logOutUser}>
             Logout
           </span>
         </Fragment>
