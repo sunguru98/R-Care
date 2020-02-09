@@ -144,6 +144,7 @@ export function* onUpdateRoute({
     yield call(() => Axios.put<RouteSingleResponse>(`/routes/${id}`, route));
     yield alert('Route updated successfully');
     yield history.push('/dashboard');
+    yield put<ClearRouteAction>({ type: 'CLEAR_ROUTE' });
     yield call(onFetchRoutes);
   } catch (err) {
     const { response } = err as AxiosError<RouteServerError | string>;
@@ -171,6 +172,7 @@ export function* onDeleteRoute({ payload }: ReturnType<typeof deleteRoute>) {
     });
     yield call(() => Axios.delete<RouteSingleResponse>(`/routes/${payload}`));
     yield history.push('/dashboard');
+    yield put<ClearRouteAction>({ type: 'CLEAR_ROUTE' });
     yield call(onFetchRoutes);
     yield alert('Route deleted successfully');
   } catch (err) {
