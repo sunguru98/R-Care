@@ -5,7 +5,8 @@ import {
   GetSingleRouteAction,
   DeleteRouteAction,
   GetRoutesAction,
-  CreateRoutesAction
+  CreateRoutesAction,
+  ClearRouteErrorsAction
 } from '../../types/redux/actions/routeActions.type';
 
 export const createRoute = (route: RouteInputRequest): CreateRouteAction => ({
@@ -38,4 +39,8 @@ export const getSingleRoute = (id: string): GetSingleRouteAction => ({
 export const deleteRoute = (id: string): DeleteRouteAction => ({
   type: 'DELETE_ROUTE',
   payload: id
+});
+
+export const clearRouteErrors = (): ClearRouteErrorsAction => ({
+  type: 'CLEAR_ROUTE_ERRORS'
 });

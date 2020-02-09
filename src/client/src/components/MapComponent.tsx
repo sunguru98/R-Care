@@ -1,3 +1,4 @@
+/// <reference path='../../node_modules/@types/googlemaps/index.d.ts' />
 import React, { useState, useEffect, useRef } from 'react';
 import { ExtendedRoute } from '../types/redux/reducers/routeReducer.type';
 

@@ -38,9 +38,11 @@ export function* onFetchRoutes() {
     yield put<SetRoutesAction>({ type: 'SET_ROUTES', payload: data.routes });
   } catch (err) {
     const { response } = err as AxiosError<RouteServerError | string>;
-    const message =
-      (response?.data as RouteServerError).message ?? response?.data;
-    yield alert(message);
+    if (response) {
+      const message =
+        (response?.data as RouteServerError).message ?? response?.data;
+      yield alert(message);
+    } else alert(err);
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -64,9 +66,11 @@ export function* onFetchSingleRoute({
     yield put<SetRouteAction>({ type: 'SET_ROUTE', payload: data.route });
   } catch (err) {
     const { response } = err as AxiosError<RouteServerError | string>;
-    const message =
-      (response?.data as RouteServerError).message ?? response?.data;
-    yield alert(message);
+    if (response) {
+      const message =
+        (response?.data as RouteServerError).message ?? response?.data;
+      yield alert(message);
+    } else alert(err);
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -81,20 +85,22 @@ export function* onCreateRoute({ payload }: ReturnType<typeof createRoute>) {
       type: 'SET_ROUTE_LOADING',
       payload: true
     });
-    yield call(() => Axios.post<RouteSingleResponse>('/routes', payload));
+    yield Axios.post<RouteSingleResponse>('/routes', payload);
     yield history.push('/dashboard');
     yield call(onFetchRoutes);
     yield alert('Route created successfully');
   } catch (err) {
     const { response } = err as AxiosError<RouteServerError | string>;
-    const message = (response?.data as RouteServerError).message;
-    if (typeof message !== 'string' && Array.isArray(message)) {
-      yield put<ClearRouteErrorsAction>({ type: 'CLEAR_ROUTE_ERRORS' });
-      yield put<SetRouteErrorsAction>({
-        type: 'SET_ROUTE_ERRORS',
-        payload: message as ValidationError[]
-      });
-    }
+    if (response) {
+      const message = (response?.data as RouteServerError).message;
+      if (typeof message !== 'string' && Array.isArray(message)) {
+        yield put<ClearRouteErrorsAction>({ type: 'CLEAR_ROUTE_ERRORS' });
+        yield put<SetRouteErrorsAction>({
+          type: 'SET_ROUTE_ERRORS',
+          payload: message as ValidationError[]
+        });
+      }
+    } else alert(err);
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -112,19 +118,23 @@ export function* onCreateRoutes({
       payload: true
     });
     yield call(() => Axios.post<RouteMultiResponse>('/routes/multi', payload));
+    console.log('Why is this working?');
     yield history.push('/dashboard');
     yield call(onFetchRoutes);
     yield alert('Routes uploaded successfully');
   } catch (err) {
+    console.log(err);
     const { response } = err as AxiosError<RouteServerError | string>;
-    const message = (response?.data as RouteServerError).message;
-    if (typeof message !== 'string' && Array.isArray(message)) {
-      yield put<ClearRouteErrorsAction>({ type: 'CLEAR_ROUTE_ERRORS' });
-      yield put<SetRouteErrorsAction>({
-        type: 'SET_ROUTE_ERRORS',
-        payload: message as BatchError[]
-      });
-    } else alert(message);
+    if (response) {
+      const message = (response?.data as RouteServerError).message;
+      if (typeof message !== 'string' && Array.isArray(message)) {
+        yield put<ClearRouteErrorsAction>({ type: 'CLEAR_ROUTE_ERRORS' });
+        yield put<SetRouteErrorsAction>({
+          type: 'SET_ROUTE_ERRORS',
+          payload: message as BatchError[]
+        });
+      } else alert(message);
+    } else alert(err);
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -148,14 +158,16 @@ export function* onUpdateRoute({
     yield call(onFetchRoutes);
   } catch (err) {
     const { response } = err as AxiosError<RouteServerError | string>;
-    const message = (response?.data as RouteServerError).message;
-    if (typeof message !== 'string' && Array.isArray(message)) {
-      yield put<ClearRouteErrorsAction>({ type: 'CLEAR_ROUTE_ERRORS' });
-      yield put<SetRouteErrorsAction>({
-        type: 'SET_ROUTE_ERRORS',
-        payload: message as ValidationError[]
-      });
-    }
+    if (response) {
+      const message = (response?.data as RouteServerError).message;
+      if (typeof message !== 'string' && Array.isArray(message)) {
+        yield put<ClearRouteErrorsAction>({ type: 'CLEAR_ROUTE_ERRORS' });
+        yield put<SetRouteErrorsAction>({
+          type: 'SET_ROUTE_ERRORS',
+          payload: message as ValidationError[]
+        });
+      }
+    } else alert(err);
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -177,9 +189,11 @@ export function* onDeleteRoute({ payload }: ReturnType<typeof deleteRoute>) {
     yield alert('Route deleted successfully');
   } catch (err) {
     const { response } = err as AxiosError<RouteServerError | string>;
-    const message =
-      (response?.data as RouteServerError).message ?? response?.data;
-    yield alert(message);
+    if (response) {
+      const message =
+        (response?.data as RouteServerError).message ?? response?.data;
+      yield alert(message);
+    } else alert(err);
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',

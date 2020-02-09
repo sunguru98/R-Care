@@ -25,7 +25,7 @@ const authenticate = async (
     req.accessToken = accessToken;
     next();
   } catch (err) {
-    res.status(401).send({ statusCode: 401, message: err.message });
+    res.status(403).send({ statusCode: 403, message: err.message });
   }
 };
 

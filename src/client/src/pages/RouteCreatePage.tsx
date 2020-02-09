@@ -69,6 +69,7 @@ const RouteCreatePage: React.FC<RouteCreatePageProps> = ({
         listener.remove();
       };
     }
+    return;
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
@@ -94,16 +95,15 @@ const RouteCreatePage: React.FC<RouteCreatePageProps> = ({
     <section className='page'>
       <Helmet>
         <title>R-Care Create Route</title>
-        <meta name="description" content="Create page of R-Care"/>
+        <meta name='description' content='Create page of R-Care' />
       </Helmet>
       <form className='Form' onSubmit={handleSubmit}>
-        <h1>{ !routeLoading ? 'Create a new route' : 'Please wait' }</h1>
+        <h1>{!routeLoading ? 'Create a new route' : 'Please wait'}</h1>
         {routeLoading ? (
           <Spinner />
         ) : (
           <Fragment>
             <InputField
-              required
               name='name'
               type='text'
               placeholder='Route name'
@@ -112,7 +112,11 @@ const RouteCreatePage: React.FC<RouteCreatePageProps> = ({
               isTextArea={false}
             />
             <div className='MapField'>
-              <input name='stop' ref={inputElement} />
+              <input
+                name='stop'
+                placeholder='Enter route stops'
+                ref={inputElement}
+              />
               <ul
                 style={{
                   display: 'flex',
@@ -131,7 +135,6 @@ const RouteCreatePage: React.FC<RouteCreatePageProps> = ({
             <SelectField
               className='SelectField'
               name='routeType'
-              required
               value={routeType}
               onChange={handleChange}
               optionValues={[
@@ -147,7 +150,6 @@ const RouteCreatePage: React.FC<RouteCreatePageProps> = ({
             <SelectField
               className='SelectField'
               name='direction'
-              required
               value={direction}
               onChange={handleChange}
               optionValues={[
@@ -163,7 +165,6 @@ const RouteCreatePage: React.FC<RouteCreatePageProps> = ({
             <SelectField
               className='SelectField'
               name='status'
-              required
               value={status}
               onChange={handleChange}
               optionValues={[

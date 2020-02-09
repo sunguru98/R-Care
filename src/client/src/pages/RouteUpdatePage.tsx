@@ -72,6 +72,7 @@ const RouteUpdatePage: React.FC<RouteUpdatePageProps> = ({
         listener.remove();
       };
     }
+    return;
   });
 
   useEffect(() => {
@@ -112,7 +113,7 @@ const RouteUpdatePage: React.FC<RouteUpdatePageProps> = ({
     <section className='page'>
       <Helmet>
         <title>R-Care Update Route</title>
-        <meta name="description" content="Update Route page of R-Care"/>
+        <meta name='description' content='Update Route page of R-Care' />
       </Helmet>
       {routeLoading ? (
         <Spinner />
@@ -133,7 +134,11 @@ const RouteUpdatePage: React.FC<RouteUpdatePageProps> = ({
                 isTextArea={false}
               />
               <div className='MapField'>
-                <input name='stop' ref={inputElement} />
+                <input
+                  name='stop'
+                  placeholder='Enter route stops'
+                  ref={inputElement}
+                />
                 <ul
                   style={{
                     display: 'flex',

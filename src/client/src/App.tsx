@@ -27,13 +27,13 @@ const App: React.FC<ReduxProps> = ({ accessToken }) => {
     Axios.defaults.headers.common['Authorization'] = accessToken;
   });
   Axios.interceptors.response.use(
-    res => res,
-    (res: AxiosError<{ message: string; statusCode: number }>) => {
-      if (res.response?.data.statusCode === 401) {
+    res => Promise.resolve(res),
+    (err: AxiosError<{ message: string; statusCode: number }>) => {
+      if (err.response!.data.statusCode === 403) {
         alert('Session Expired. Kindly login again');
         store.dispatch<UserLogoutAction>({ type: 'USER_LOGOUT' });
         history.push('/login');
-      }
+      } else throw err;
     }
   );
   return (

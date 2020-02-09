@@ -7,7 +7,7 @@ interface RouteListProps {
 }
 const RouteList: React.FC<RouteListProps> = ({ routes }) => {
   return (
-    <div style={{ marginTop: '2rem', overflow: 'scroll' }}>
+    <div style={{ marginTop: '2rem', overflow: 'scroll', maxHeight: '62vh' }}>
       {routes.map(
         (route: Route): JSX.Element => (
           <RouteListItem key={route._id} routeObj={route} />

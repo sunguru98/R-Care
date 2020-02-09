@@ -39,14 +39,16 @@ export function* onRegister({
     yield history.push('/dashboard');
   } catch (err) {
     const { response } = err as AxiosError<UserServerError | string>;
-    const message = (response?.data as UserServerError).message;
-    if (message && Array.isArray(message)) {
-      yield put<ClearUserErrorsAction>({ type: 'CLEAR_USER_ERRORS' });
-      yield put<SetUserErrorsAction>({
-        type: 'SET_USER_ERRORS',
-        payload: message
-      });
-    } else yield alert(message);
+    if (response) {
+      const message = (response.data as UserServerError).message;
+      if (message && Array.isArray(message)) {
+        yield put<ClearUserErrorsAction>({ type: 'CLEAR_USER_ERRORS' });
+        yield put<SetUserErrorsAction>({
+          type: 'SET_USER_ERRORS',
+          payload: message
+        });
+      } else yield alert(message);
+    } else alert(err);
   } finally {
     yield put<SetUserLoadingAction>({
       type: 'SET_USER_LOADING',
@@ -55,35 +57,32 @@ export function* onRegister({
   }
 }
 
-export function* onLogin({
-  payload: { email, password }
-}: ReturnType<typeof signInUser>) {
+export function* onLogin({ payload }: ReturnType<typeof signInUser>) {
   try {
     yield put<SetUserLoadingAction>({
       type: 'SET_USER_LOADING',
       payload: true
     });
-    const { data }: AxiosResponse<UserServerResponse> = yield call(() =>
-      Axios.post<UserServerResponse>('/user/login', {
-        email,
-        password
-      } as LoginPayload)
-    );
-    // console.log(data);
-    Axios.defaults.headers.common['Authorization'] = data.accessToken;
-    yield put<SetUserAction>({ type: 'SET_USER', payload: data });
+    const response: AxiosResponse<UserServerResponse> = yield Axios.post<
+      UserServerResponse
+    >('/user/login', payload);
+    yield (Axios.defaults.headers.common['Authorization'] =
+      response.data.accessToken);
+    yield put<SetUserAction>({ type: 'SET_USER', payload: response.data });
     yield alert('Signin successful');
     yield history.push('/dashboard');
   } catch (err) {
     const { response } = err as AxiosError<UserServerError | string>;
-    const message = (response?.data as UserServerError).message;
-    if (message && Array.isArray(message)) {
-      yield put<ClearUserErrorsAction>({ type: 'CLEAR_USER_ERRORS' });
-      yield put<SetUserErrorsAction>({
-        type: 'SET_USER_ERRORS',
-        payload: message
-      });
-    } else yield alert(message);
+    if (response) {
+      const message = (response?.data as UserServerError).message;
+      if (message && Array.isArray(message)) {
+        yield put<ClearUserErrorsAction>({ type: 'CLEAR_USER_ERRORS' });
+        yield put<SetUserErrorsAction>({
+          type: 'SET_USER_ERRORS',
+          payload: message
+        });
+      } else yield alert(message);
+    } else alert(err);
   } finally {
     yield put<SetUserLoadingAction>({
       type: 'SET_USER_LOADING',
@@ -100,8 +99,10 @@ export function* onLogout() {
     call(() => Axios.delete<UserServerResponse>('/user/logout'));
   } catch (err) {
     const { response } = err as AxiosError<UserServerError | string>;
-    const message = (response?.data as UserServerError).message as string;
-    yield alert(message);
+    if (response) {
+      const message = (response?.data as UserServerError).message as string;
+      yield alert(message);
+    } else alert(err);
   } finally {
     yield put<SetUserLoadingAction>({
       type: 'SET_USER_LOADING',

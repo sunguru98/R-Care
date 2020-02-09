@@ -2,7 +2,10 @@ import React, { useState, FormEvent, ChangeEvent, Fragment } from 'react';
 import Spinner from '../components/Spinner';
 import BatchUploadErrorList from '../components/BatchUploadErrorList';
 import { connect, ConnectedProps } from 'react-redux';
-import { createMultipleRoutes } from '../redux/actions/routeActions';
+import {
+  createMultipleRoutes,
+  clearRouteErrors
+} from '../redux/actions/routeActions';
 import { RootState } from '../types/redux/reducers/rootReducer.type';
 import { BatchError } from '../types/redux/reducers/routeReducer.type';
 import Helmet from 'react-helmet';
@@ -13,7 +16,8 @@ type ReduxProps = ConnectedProps<typeof connector>;
 const RouteBatchUploadPage: React.FC<RouteBatchUploadPageProps> = ({
   routeLoading,
   errors,
-  createMultipleRoutes
+  createMultipleRoutes,
+  clearRouteErrors
 }) => {
   const [file, setFile] = useState<File | null>(null);
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
@@ -40,6 +44,7 @@ const RouteBatchUploadPage: React.FC<RouteBatchUploadPageProps> = ({
         return alert('File size too large');
       }
       setFile(fileObj);
+      if (errors?.length) clearRouteErrors();
     }
   };
 
@@ -47,7 +52,7 @@ const RouteBatchUploadPage: React.FC<RouteBatchUploadPageProps> = ({
     <section className='page' style={{ height: 'calc(105vh - 10rem)' }}>
       <Helmet>
         <title>R-Care Upload Route</title>
-        <meta name="description" content="Upload page of R-Care"/>
+        <meta name='description' content='Upload page of R-Care' />
       </Helmet>
       <div className='Form' style={{ padding: '3rem' }}>
         <h1>{!routeLoading ? 'Upload CSV File' : 'Please wait'}</h1>
@@ -132,7 +137,12 @@ const mapStateToProps = ({ route: { routeLoading, errors } }: RootState) => ({
   routeLoading,
   errors
 });
-const mapDispatchToProps = { createMultipleRoutes };
+
+const mapDispatchToProps = {
+  createMultipleRoutes,
+  clearRouteErrors
+};
+
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 export default connector(RouteBatchUploadPage);
