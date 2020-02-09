@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Axios from 'axios';
+import Axios, { AxiosError } from 'axios';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import PrivateRoute from './components/PrivateRoute';
@@ -14,14 +14,28 @@ import RouteBatchUploadPage from './pages/RouteBatchUploadPage';
 
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from './types/redux/reducers/rootReducer.type';
+import history from './redux/createHistory';
+import store from './redux/store';
+import { UserLogoutAction } from './types/redux/actions/userActions.type';
 
 type ReduxProps = ConnectedProps<typeof connector>;
 
 const App: React.FC<ReduxProps> = ({ accessToken }) => {
   useEffect(() => {
-    if (accessToken)
-      Axios.defaults.headers.common['Authorization'] = accessToken;
+    if (accessToken) {
+    }
+    Axios.defaults.headers.common['Authorization'] = accessToken;
   });
+  Axios.interceptors.response.use(
+    res => res,
+    (res: AxiosError<{ message: string; statusCode: number }>) => {
+      if (res.response?.data.statusCode === 401) {
+        alert('Session Expired. Kindly login again');
+        store.dispatch<UserLogoutAction>({ type: 'USER_LOGOUT' });
+        history.push('/login');
+      }
+    }
+  );
   return (
     <React.Fragment>
       <Header />

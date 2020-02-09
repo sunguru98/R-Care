@@ -5,6 +5,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { createMultipleRoutes } from '../redux/actions/routeActions';
 import { RootState } from '../types/redux/reducers/rootReducer.type';
 import { BatchError } from '../types/redux/reducers/routeReducer.type';
+import Helmet from 'react-helmet';
 
 interface RouteBatchUploadPageProps extends ReduxProps {}
 type ReduxProps = ConnectedProps<typeof connector>;
@@ -44,6 +45,10 @@ const RouteBatchUploadPage: React.FC<RouteBatchUploadPageProps> = ({
 
   return (
     <section className='page' style={{ height: 'calc(105vh - 10rem)' }}>
+      <Helmet>
+        <title>R-Care Upload Route</title>
+        <meta name="description" content="Upload page of R-Care"/>
+      </Helmet>
       <div className='Form' style={{ padding: '3rem' }}>
         <h1>{!routeLoading ? 'Upload CSV File' : 'Please wait'}</h1>
         {routeLoading ? (

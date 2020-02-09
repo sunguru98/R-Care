@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { signInUser } from '../redux/actions/userActions';
 import InputField from '../components/InputField';
 import Spinner from '../components/Spinner';
+import Helmet from 'react-helmet';
 
 type ReduxProps = ConnectedProps<typeof connector>;
 interface LoginPageProps extends ReduxProps {}
@@ -34,6 +35,10 @@ const LoginPage: React.FC<LoginPageProps> = ({
 
   return (
     <section className='LoginPage page'>
+      <Helmet>
+        <title>R-Care Login</title>
+        <meta name="description" content="Login page of R-Care"/>
+      </Helmet>
       <form className='Form' onSubmit={handleSubmit}>
         <h1>{!userLoading ? 'Welcome back' : 'Please wait'}</h1>
         {userLoading ? (

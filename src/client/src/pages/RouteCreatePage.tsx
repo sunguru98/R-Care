@@ -18,6 +18,7 @@ import Spinner from '../components/Spinner';
 import InputField from '../components/InputField';
 import SelectField from '../components/SelectField';
 import StopBadge from '../components/StopBadge';
+import Helmet from 'react-helmet';
 
 interface RouteCreatePageProps extends ReduxProps {}
 type ReduxProps = ConnectedProps<typeof connector>;
@@ -91,6 +92,10 @@ const RouteCreatePage: React.FC<RouteCreatePageProps> = ({
 
   return (
     <section className='page'>
+      <Helmet>
+        <title>R-Care Create Route</title>
+        <meta name="description" content="Create page of R-Care"/>
+      </Helmet>
       <form className='Form' onSubmit={handleSubmit}>
         <h1>{ !routeLoading ? 'Create a new route' : 'Please wait' }</h1>
         {routeLoading ? (

@@ -35,7 +35,6 @@ export function* onFetchRoutes() {
     const { data }: AxiosResponse<RouteMultiResponse> = yield call(() =>
       Axios.get<RouteMultiResponse>('/routes?large=yes')
     );
-    // console.log(data)
     yield put<SetRoutesAction>({ type: 'SET_ROUTES', payload: data.routes });
   } catch (err) {
     const { response } = err as AxiosError<RouteServerError | string>;
@@ -62,7 +61,6 @@ export function* onFetchSingleRoute({
     const { data }: AxiosResponse<RouteSingleResponse> = yield call(() =>
       Axios.get<RouteSingleResponse>(`/routes/${payload}`)
     );
-    // console.log(data)
     yield put<SetRouteAction>({ type: 'SET_ROUTE', payload: data.route });
   } catch (err) {
     const { response } = err as AxiosError<RouteServerError | string>;
@@ -84,7 +82,6 @@ export function* onCreateRoute({ payload }: ReturnType<typeof createRoute>) {
       payload: true
     });
     yield call(() => Axios.post<RouteSingleResponse>('/routes', payload));
-    // console.log(data)
     yield history.push('/dashboard');
     yield call(onFetchRoutes);
     yield alert('Route created successfully');
@@ -115,7 +112,6 @@ export function* onCreateRoutes({
       payload: true
     });
     yield call(() => Axios.post<RouteMultiResponse>('/routes/multi', payload));
-    // console.log(data)
     yield history.push('/dashboard');
     yield call(onFetchRoutes);
     yield alert('Routes uploaded successfully');
@@ -128,7 +124,7 @@ export function* onCreateRoutes({
         type: 'SET_ROUTE_ERRORS',
         payload: message as BatchError[]
       });
-    } else alert(message)
+    } else alert(message);
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -174,10 +170,9 @@ export function* onDeleteRoute({ payload }: ReturnType<typeof deleteRoute>) {
       payload: true
     });
     yield call(() => Axios.delete<RouteSingleResponse>(`/routes/${payload}`));
-    // console.log(data)
     yield history.push('/dashboard');
     yield call(onFetchRoutes);
-    yield alert('Route updated successfully');
+    yield alert('Route deleted successfully');
   } catch (err) {
     const { response } = err as AxiosError<RouteServerError | string>;
     const message =

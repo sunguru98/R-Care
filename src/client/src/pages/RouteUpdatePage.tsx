@@ -17,6 +17,7 @@ import Spinner from '../components/Spinner';
 import InputField from '../components/InputField';
 import SelectField from '../components/SelectField';
 import StopBadge from '../components/StopBadge';
+import Helmet from 'react-helmet';
 
 interface RouteUpdatePageProps
   extends RouteComponentProps<{ routeId: string }>,
@@ -109,6 +110,10 @@ const RouteUpdatePage: React.FC<RouteUpdatePageProps> = ({
 
   return (
     <section className='page'>
+      <Helmet>
+        <title>R-Care Update Route</title>
+        <meta name="description" content="Update Route page of R-Care"/>
+      </Helmet>
       {routeLoading ? (
         <Spinner />
       ) : (

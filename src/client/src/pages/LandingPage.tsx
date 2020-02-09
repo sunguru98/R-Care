@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../types/redux/reducers/rootReducer.type';
 import { signInUser, registerUser } from '../redux/actions/userActions';
@@ -13,6 +14,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
     <Redirect to='/dashboard' />
   ) : (
     <section className='LandingPage page'>
+      <Helmet>
+        <title>R-Care Home</title>
+        <meta name="description" content="Home page of R-Care"/>
+      </Helmet>
       <h1 className='LandingPage__title xl'>Easy route management.</h1>
       <p className='LandingPage__description'>
         Change the way you view routes and analyse their paths with R-Care.
