@@ -3,8 +3,7 @@ import { put, call } from 'redux-saga/effects';
 import history from '../../createHistory';
 import {
   UserServerError,
-  RegisterPayload,
-  LoginPayload
+  RegisterPayload
 } from '../../../types/redux/sagas/user.type';
 import {
   ClearUserErrorsAction,
