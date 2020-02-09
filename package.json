@@ -2,12 +2,14 @@
   "name": "chalo-assignment",
   "version": "1.0.0",
   "description": "The solution for Chalo.com assignment",
-  "main": "server.js",
+  "main": "dist/server.js",
   "scripts": {
+    "build": "tsc",
     "server": "nodemon src/server.ts",
     "start": "node dist/server.js",
     "client": "npm run start --prefix=src/client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",

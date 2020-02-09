@@ -42,7 +42,7 @@ export function* onFetchRoutes() {
       const message =
         (response?.data as RouteServerError).message ?? response?.data;
       yield alert(message);
-    } else alert(err);
+    }
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -70,7 +70,7 @@ export function* onFetchSingleRoute({
       const message =
         (response?.data as RouteServerError).message ?? response?.data;
       yield alert(message);
-    } else alert(err);
+    }
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -100,7 +100,7 @@ export function* onCreateRoute({ payload }: ReturnType<typeof createRoute>) {
           payload: message as ValidationError[]
         });
       }
-    } else alert(err);
+    }
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -134,7 +134,7 @@ export function* onCreateRoutes({
           payload: message as BatchError[]
         });
       } else alert(message);
-    } else alert(err);
+    }
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -167,7 +167,7 @@ export function* onUpdateRoute({
           payload: message as ValidationError[]
         });
       }
-    } else alert(err);
+    }
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',
@@ -193,7 +193,7 @@ export function* onDeleteRoute({ payload }: ReturnType<typeof deleteRoute>) {
       const message =
         (response?.data as RouteServerError).message ?? response?.data;
       yield alert(message);
-    } else alert(err);
+    }
   } finally {
     yield put<SetRouteLoadingAction>({
       type: 'SET_ROUTE_LOADING',

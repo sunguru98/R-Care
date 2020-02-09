@@ -48,7 +48,7 @@ export function* onRegister({
           payload: message
         });
       } else yield alert(message);
-    } else alert(err);
+    }
   } finally {
     yield put<SetUserLoadingAction>({
       type: 'SET_USER_LOADING',
@@ -82,7 +82,7 @@ export function* onLogin({ payload }: ReturnType<typeof signInUser>) {
           payload: message
         });
       } else yield alert(message);
-    } else alert(err);
+    }
   } finally {
     yield put<SetUserLoadingAction>({
       type: 'SET_USER_LOADING',
@@ -102,7 +102,7 @@ export function* onLogout() {
     if (response) {
       const message = (response?.data as UserServerError).message as string;
       yield alert(message);
-    } else alert(err);
+    }
   } finally {
     yield put<SetUserLoadingAction>({
       type: 'SET_USER_LOADING',
