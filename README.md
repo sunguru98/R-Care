@@ -21,6 +21,13 @@ The application is built on the problem of viewing a repository for the routes b
 
 Since this entire application (back as well as front end) is built in TypeScript, the source code is located in src directory.
 
+- To install both backend and front end
+
+  ```bash
+  npm install
+  npm install --prefix=src/client
+  ```
+
 - To compile the file
   ```bash
   npm run dev

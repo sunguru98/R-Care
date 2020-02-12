@@ -9,7 +9,7 @@
     "start": "node dist/server.js",
     "client": "npm run start --prefix=src/client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "postinstall": "npm run build",
+    
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix dist/client && npm run build --prefix dist/client"
   },
   "repository": {
